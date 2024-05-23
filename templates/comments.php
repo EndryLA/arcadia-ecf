@@ -9,7 +9,6 @@ $comments = $commentsTable->selectLine2('isVisible','oui');
 
 
 <div class="comment-section section-wrapper">
-
     <h2 class='align-center'>Commentaires</h2>
     <div class="comments-container">
         <?php foreach($comments as $comment) { ?>

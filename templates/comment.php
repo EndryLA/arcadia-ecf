@@ -28,7 +28,6 @@ if (isset($_POST['submit-btn'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../public/code/css/styles.css">
-
 </head>
 <body>
     <?php include 'header.php'?>

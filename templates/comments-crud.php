@@ -23,7 +23,6 @@ if (isset($_POST['delete'])) {
     <title>Arcadia</title>
     <link rel="stylesheet" href="../public/code/css/styles.css">
     <link rel="stylesheet" href="../public/code/css/crud-styles.css">
-
 </head>
 <body>
     <?php include 'header.php'?>
