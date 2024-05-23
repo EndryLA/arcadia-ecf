@@ -1,15 +1,11 @@
 <?php 
+
 include 'verifyRole.php';
 include __DIR__ . '/../includes/database-connection.php';
 include __DIR__ . '/../classes/DatabaseTable.php';
 
-
 $servicesTable = new DatabaseTable($pdo,'service','service_id');
-$service = $servicesTable->selectLine($_GET['id']);
 
-
-$serviceName = htmlspecialchars($service['nom']);
-$serviceDescription = htmlspecialchars($service['description']);
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +13,7 @@ $serviceDescription = htmlspecialchars($service['description']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arcadia</title>
+    <title>Document</title>
     <link rel="stylesheet" href="../public/code/css/styles.css">
 
 </head>
@@ -25,15 +21,16 @@ $serviceDescription = htmlspecialchars($service['description']);
     <?php include 'header.php'?>
     
     <form method='post'>
-        <h1>Modifier Service</h1>
+        <h1>Modifier données</h1>
+
         <div>
             <label>Nom</label>
-            <input type='text' name='service-name' value='<?=$serviceName ?>'> 
+            <input type='text' name='name' required> 
         </div>
-        
+
         <div>
             <label>Description</label>
-            <textarea name='service-description'><?= $serviceDescription ?></textarea> 
+            <textarea type='text' name='description' required> </textarea>
         </div>
         <input type='submit' class='button' name='submit-btn' value='Enregistrer'>
     </form>
@@ -48,10 +45,11 @@ $serviceDescription = htmlspecialchars($service['description']);
 
 if (isset($_POST['submit-btn'])) {
     $fields = [
-        'nom' => htmlspecialchars($_POST['service-name'],ENT_QUOTES),
-        'description' => htmlspecialchars($_POST['service-description'],ENT_QUOTES)
+        'nom' => htmlspecialchars($_POST['name']),
+        'description' => htmlspecialchars($_POST['description']),
     ];
+
     
-    $servicesTable->update($fields,$_GET['id']);
-    header('location: service-config.php');
+    $servicesTable->insert($fields);
+    header('location: animal-crud.php');
 }

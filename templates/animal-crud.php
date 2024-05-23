@@ -4,7 +4,25 @@ include 'verifyRole.php';
 include __DIR__ . '/../includes/database-connection.php';
 include __DIR__ . '/../classes/DatabaseTable.php';
 
+
+
+
+
+if(isset($_POST['modify'])) {
+    if ($_SESSION['role'] == 2) {
+        header('location: rapport.php?id='. $_POST['animal_id']);
+
+    } else {
+        header('location: edit-animal.php?id='. $_POST['animal_id']);
+    }
+}
+if (isset($_POST['new-animal'])) {
+    header('location: new-animal.php');
+}
+
 ?>
+
+
 
 
 
@@ -91,18 +109,4 @@ include __DIR__ . '/../classes/DatabaseTable.php';
 </body>
 </html>
 
-<?php 
-
-if(isset($_POST['userid'])) {
-    echo $_POST['userid'];
-}
-
-if(isset($_POST['modify'])) {
-    header('location: edit-animal.php?id='. $_POST['animal_id']);
-}
-if (isset($_POST['new-animal'])) {
-    header('location: new-animal.php');
-}
-
-?>
 

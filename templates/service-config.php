@@ -32,7 +32,8 @@ include __DIR__ . '/../classes/DatabaseTable.php';
           foreach($services as $service) { ?>
             
           <tr>
-              <td><?= htmlspecialchars($service['nom'],ENT_QUOTES)?></td>
+              <td><?= $service['nom']?></td>
+              <td><?= $service['description']?></td>
               <td>
                   <form action='' method='post'>
                       <input type='hidden' name='service_id' value='<?=htmlspecialchars($service['service_id']) ?>'>
@@ -47,6 +48,7 @@ include __DIR__ . '/../classes/DatabaseTable.php';
               </td>
               
           </tr>
+          
 
           <?php 
             if(isset($_POST['modify'])) {

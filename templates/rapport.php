@@ -4,10 +4,12 @@ include __DIR__ . '/../includes/database-connection.php';
 include __DIR__ . '/../classes/DatabaseTable.php';
 
 $vetReportTable = new DatabaseTable($pdo,'rapport_veterinaire','rapport_veterinaire_id');
+$animalTable = new DatabaseTable($pdo,'animal','animal_id');
 
 
 $animalId = $_GET['id'];
-$rapportVeterinaire = $vetReportTable->selectLine($animalId);
+$rapportVeterinaire = $vetReportTable->selectLine($_GET['id']);
+$animal = $animalTable->selectLine($_GET['id']);
 
 ?>
 
@@ -30,15 +32,15 @@ $rapportVeterinaire = $vetReportTable->selectLine($animalId);
         <p></p>
         <div>
             <label>Etat de l'animal</label>
-            <input type='text' name='animal-state' value=''> 
+            <input type='text' name='animal-state' value='<?=htmlspecialchars($animal['etat'])?>'> 
         </div>
         <div>
             <label>Nourriture proposée</label>
-            <input type='text' name='proposed-food' value=''> 
+            <input type='text' name='nourriture' value='<?=htmlspecialchars($rapportVeterinaire['nourriture'])?>'> 
         </div>
         <div>
             <label>Grammage de la nourriture</label>
-            <input type='text' name='food-dosage' value=''> 
+            <input type='text' name='grammage' value='<?=htmlspecialchars($rapportVeterinaire['grammage'])?> '> 
         </div>
         <div>
             <label>Date de passage</label>
@@ -46,7 +48,7 @@ $rapportVeterinaire = $vetReportTable->selectLine($animalId);
         </div>
         <div>
             <label>Detail de l'état de l'animal</label>
-            <textarea name='report'><?= htmlspecialchars($rapportVeterinaire['detail'],ENT_QUOTES) ?></textarea>
+            <textarea name='report'><?= htmlspecialchars($rapportVeterinaire['detail']) ?></textarea>
         </div>
         <input name='submit-btn' class='button' value='Enregister' type='submit'>
     </form>
@@ -57,9 +59,13 @@ $rapportVeterinaire = $vetReportTable->selectLine($animalId);
 <?php
 
 if (isset($_POST['submit-btn'])) {
-    $fields = [
-        'date' => htmlspecialchars($_POST['report-date'],ENT_QUOTES),
-        'detail' => htmlspecialchars($_POST['report'],ENT_QUOTES)
+    $VetReportFields = [
+        'date' => htmlspecialchars($_POST['report-date']),
+        'detail' => htmlspecialchars($_POST['report']),
+        'nourriture' => htmlspecialchars($_POST['nourriture']),
+        'grammage' => htmlspecialchars($_POST['grammage'])
     ];
-    $vetReportTable->update($fields,$_GET['id']);
+    $vetReportTable->update($VetReportFields,$_GET['id']);
+
+    $animalTable->update(['etat' => htmlspecialchars($_POST['animal-state'])],$_GET['id']);
 }
