@@ -38,7 +38,7 @@ class DatabaseTable{
 
         $query = $this->pdo->prepare($sql);
         $query->execute($fields);
-        
+
     }
 
     public function delete($id) {
@@ -57,7 +57,7 @@ class DatabaseTable{
     public function selectLine2($key,$id) {
         $sql = 'SELECT * FROM `' . $this->table . '` WHERE `' . $key . '` = :id';
         $query = $this->pdo->prepare($sql);
-        echo $sql;
+        
         $query->execute(['id' => $id]);
         return $query->fetchAll();
         
@@ -76,6 +76,7 @@ class DatabaseTable{
         $sql .= ' WHERE ' . $this->primaryKey . '= ' .'"'. $primaryKey . '"'; 
     
         $sql = rtrim($sql,',');
+
 
 
         $query = $this->pdo->prepare($sql);
