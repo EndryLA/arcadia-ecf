@@ -2,7 +2,7 @@
 
 
 try {
-    $db_host = 'eu-cluster-west-01.k8s.cleardb.net ';
+    $db_host = 'eu-cluster-west-01.k8s.cleardb.net';
     $db_user = 'b65e2983e64271';
     $db_pass = '8d42dec8';
     $db_name = 'heroku_f15235858c65942';
