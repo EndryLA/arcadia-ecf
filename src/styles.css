@@ -29,9 +29,6 @@ a {
 h1,h2,h3,h4 {
     color:#4C352A;
 }
-h1 {
-    text-align: center;
-}
 
 .mobile-menu-btn {
     width:30px;
@@ -69,8 +66,6 @@ h1 {
 }
 
 
-
-
 /* Header Styles */
 
 .desktop-header {
@@ -78,7 +73,7 @@ h1 {
     align-items: center;
     justify-content: space-around;
     padding:1rem;
-    height:10vh;
+    height:9vh;
     width:100vw;
 
     > ul li{
@@ -103,6 +98,7 @@ h1 {
     justify-content: space-between;
     align-items: center;
     padding:2% 4%;
+    height:10vh;
 
 
     .logo img {
@@ -142,4 +138,78 @@ h1 {
     .close img {
         height:22px;
     }
+}
+
+
+.hero-section {
+  display:flex;
+  flex-direction:row-reverse;
+  margin:0;
+  width:80vw;
+  height:90vh;
+  padding:0 10vw;
+  align-items: center;
+  gap:20px;
+  max-width:1200px;
+  justify-content: space-around;
+
+  > img {
+    width:50%;
+    height:50%;
+    min-width:600px;
+    min-height:480px;
+    object-fit: cover;
+  }
+  
+  > div {
+    display:flex;
+    flex-direction: column;
+    width:600px;
+  }
+
+  & div > h1 {
+    font-size:clamp(1.75rem,4vw,2.25rem);
+    text-transform: uppercase;
+    margin:0;
+    color:#4C352A;
+  }
+
+  & div > p {
+    font-family:'Montserrat',sans-serif;
+    font-size:clamp(1rem,2vh,1.125rem);
+  }
+
+  & div > a.button {
+    font-size:1.5rem;
+  }
+  
+  @media screen and (max-width:1200px) {
+    img {
+      min-height: unset;
+      min-width:unset;
+      width:50vw;
+      height:50vw;
+    }
+  }
+}
+
+
+ @media screen and (max-width:850px) {
+  .hero-section {
+      flex-direction: column;
+      width:80vw;
+      height:85dvh;
+      margin:0 auto ;
+  }
+  .hero-section img {
+      width:100%;
+      min-height:50%;
+  }
+  .hero-section > div {
+      width:100%;
+      align-items: center;
+  }
+  .hero-section > div p,h1 {
+      text-align: center;
+  }
 }
