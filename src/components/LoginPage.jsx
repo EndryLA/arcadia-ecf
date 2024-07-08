@@ -1,6 +1,6 @@
 function LoginPage() {
     return(
-        <form>
+        <form method='post'>
             <h1>Se Connecter</h1>
             <div>
                 <label htmlFor='email'>Adresse email</label>

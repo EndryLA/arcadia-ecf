@@ -394,3 +394,23 @@ textarea {
       width:90vw;
   }
 }
+
+
+/* Footer */
+
+footer {
+  display:flex;
+  background-color: #202020;
+  color:#EBE9ED;
+  font-family: 'Montserrat',sans-serif;
+  justify-content: space-around;
+  align-items: center;
+  padding:20px 0 0px 0;
+  position:relative;
+  bottom:0;
+  width:100vw;
+
+  .copyright-notice {
+    font-size:12px;
+  }
+}
