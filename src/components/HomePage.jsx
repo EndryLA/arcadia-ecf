@@ -77,7 +77,6 @@ function HomePageServices() {
 function HomePage() {
     return (
         <>
-        <Header />
         <Hero />
         <Habitats />
         <HomePageServices />

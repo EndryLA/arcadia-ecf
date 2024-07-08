@@ -345,4 +345,52 @@ h2 {
   
 }
 
+/* Form Styles */
 
+form {
+  max-width:600px;
+  margin:auto;
+}
+
+form h1 {
+  font-family:'Spectral',sans-serif;
+  text-transform:uppercase;
+  text-align: center;
+  margin:40px;
+}
+
+form .button {
+  margin-top:20px;
+  justify-self: center;
+}
+
+form div{
+  display:flex;
+  flex-direction: column;
+}
+
+label {
+  font-family:'Alumni Sans',sans-serif;
+  font-size:22px;
+  text-transform:uppercase;
+}
+
+input {
+  font-family: 'Montserrat',sans-serif;
+  padding:10px 8px;
+  font-size:16px;
+}
+
+textarea {
+  height:300px;
+  padding:10px 8px;
+  font-family:'Montserrat',sans-serif;
+  margin-bottom:10px;
+  font-size:16px; 
+}
+
+@media screen and (max-width:768px){
+  form {
+      width:90vw;
+  }
+}
