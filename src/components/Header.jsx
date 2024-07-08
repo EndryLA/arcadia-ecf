@@ -16,7 +16,7 @@ function MobileHeader() {
     return (
         
         <header className='mobile-header'>
-            <a  className='logo' href="">
+            <a  className='logo' href="/">
                 <img src={logo}/>
             </a>
             <button onClick={handleClick} className='mobile-menu-btn burger'>
@@ -30,12 +30,12 @@ function MobileHeader() {
                 <img src={close} alt="" />
             </button>
                 <ul>
-                    <li><a href="#">Accueil</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Habitats</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="/services">Services</a></li>
+                    <li><a href="/habitats">Habitats</a></li>
+                    <li><a href="/contact">Contact</a></li>
                 </ul>
-                <a className="button">Se Connecter</a>
+                <a className="button" href='/connexion'>Se Connecter</a>
             </nav>
 
             : null
@@ -48,16 +48,16 @@ function MobileHeader() {
 function DesktopHeader() {
     return (
         <header className='desktop-header'>
-            <a className='logo' href="index.html">
+            <a className='logo' href="/">
                 <img src={logo}/>
             </a>
                 <ul>
-                    <li><a href="#">Accueil</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Habitats</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="/services">Services</a></li>
+                    <li><a href="/habitats">Habitats</a></li>
+                    <li><a href="/contact">Contact</a></li>
                 </ul>
-            <a className='button' href=''>Se connecter</a>
+            <a className='button' href='/connexion'>Se connecter</a>
         </header>
     );
 }
