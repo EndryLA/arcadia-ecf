@@ -71,12 +71,62 @@ h2 {
     font-weight:500;
     text-decoration: none;
     transition:.3s;
+    outline:none;
 
     &:hover {
         background-color: transparent;
 
     }   
 
+}
+
+.cancel-button {
+  border:1px solid #e74c3c;
+  background-color: #e74c3c;
+  color:white;
+
+  &:hover {
+    background-color: transparent;
+    color:black;
+  }
+}
+
+.buttons-container {
+  display:flex;
+  flex-flow: row !important ; 
+  column-gap:30px;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  border:1px solid #e74c3c;
+  color:white;
+  font-weight:500;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:12px;
+  transition:.3s;
+
+
+  &:hover {
+    background-color: #e46051;
+  }
+}
+
+.update-button {
+  background-color: #2980b9;
+  color:white;
+  font-weight:500;
+  padding:10px;
+  border-radius:8px;
+  cursor: pointer;
+  font-size:12px;
+  transition:.3s;
+
+  &:hover {
+    background-color: #408cbe;
+  }
 }
 
 
@@ -230,7 +280,6 @@ h2 {
 
 
 
-
 .card-service {
   display:flex;
     flex-direction: column;
@@ -248,10 +297,11 @@ h2 {
     }
 
     >h3 {
-      font-size:1.5rem;
+      font-size:1.125rem;
       margin:2rem 1rem 0 1rem;
-      font-family:'Spectral',sans-serif;
+      font-family:'Inter',sans-serif;
       text-align: center;
+      text-transform: uppercase;
 
     }
 }
@@ -389,6 +439,11 @@ textarea {
   font-size:16px; 
 }
 
+select {
+  padding:12px 10px;
+  font-size:16px;
+}
+
 @media screen and (max-width:768px){
   form {
       width:90vw;
@@ -409,8 +464,71 @@ footer {
   position:relative;
   bottom:0;
   width:100vw;
+  margin-top:20px;
 
   .copyright-notice {
     font-size:12px;
   }
+}
+
+/* CRUD STYLES */
+
+.crud-container {
+  display:flex;
+  flex-direction: column;
+  gap:10px;
+  margin:20px;
+}
+
+table{
+  padding:5px;
+  font-family: 'Montserrat',sans-serif;
+  font-size:14px;
+}
+
+td {
+  padding:12px;
+  border-bottom:1px solid rgba(0,0,0,.2);
+}
+
+th {
+  text-align: left;
+}
+
+.admin-menu {
+  margin:auto;
+  width:fit-content;
+  margin-bottom:40px;
+}
+
+.admin-menu ul{
+  display:flex;
+  gap:10px;
+  font-family:'Cantora One',sans-serif;
+}
+
+.admin-menu ul li {
+  cursor: pointer;
+  font-size:22px;
+  
+  &:hover {
+    color:#7B9C32;
+  }
+
+}
+
+.active {
+  color:#7B9C32;
+}
+
+dialog {
+  outline-color:#4C352A;
+  font-family: 'Montserrat',sans-serif;
+}
+
+dialog button {
+  outline:none;
+  padding:4px 20px;
+  margin:0 4px 4px 0;
+  cursor:pointer;
 }
