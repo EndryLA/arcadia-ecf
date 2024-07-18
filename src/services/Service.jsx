@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react'
 import {DeleteButton, UpdateButton} from '../components/CrudButtons'
 import { useParams, useNavigate } from 'react-router-dom'
 import ServiceCard from '../components/ServiceCard'
+import {Link} from 'react-router-dom'
 
 
 /* Displays all the services in the service page */
@@ -71,7 +72,7 @@ export function ServiceCrud() {
                 ))}
             </tbody>
         </table>
-        <a href='/dashboard/services/new' className='button'>Créer Service</a>
+        <Link to='/dashboard/services/new' className='button'>Créer Service</Link>
 
         </div>
         

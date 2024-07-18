@@ -4,6 +4,9 @@ import HeroImage from '@assets/hero-image.jpg'
 import LionImage from '@assets/lion.jpg'
 import HibouImage from '@assets/hibou.jpg'
 import PerroquetImage from '@assets/perroquet.jpg'
+import NewComment from './NewComment'
+import { GetComments } from '../services/Comment'
+import {Link} from 'react-router-dom'
 
 function Hero() {
     return (
@@ -12,7 +15,7 @@ function Hero() {
             <div>
                 <h1>Rencontrez les animaux sauvages de Brocéliande</h1>
                 <p>Situé au cœur de la forêt enchantée de Brocéliande, le Zoo de Brocéliande vous invite à un voyage extraordinaire à la découverte de la faune sauvage.</p>
-                <a className='button' href=''>Je Découvre</a>
+                <Link className='button' to='/habitats'>Je Découvre</Link>
             </div>
         </section>
     )
@@ -27,7 +30,7 @@ function Habitats() {
                 <div className='habitat-info'>
                     <h3>La jungle du roi</h3>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quidem nulla est quos quibusdam natus vitae minus sit. Facere distinctio natus magni qui nisi! Optio eius veritatis voluptatibus reprehenderit maxime? Nesciunt deleniti facilis eaque maiores alias, doloribus nulla provident praesentium!</p>
-                    <a className='button' href=''>Visiter</a>
+                    <Link className='button' to=''>Visiter</Link>
                 </div>
              </div> 
              <div className='habitat habitat-reverse'>
@@ -35,7 +38,7 @@ function Habitats() {
                 <div className='habitat-info'>
                     <h3>La cage aux oiseaux</h3>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quidem nulla est quos quibusdam natus vitae minus sit. Facere distinctio natus magni qui nisi! Optio eius veritatis voluptatibus reprehenderit maxime? Nesciunt deleniti facilis eaque maiores alias, doloribus nulla provident praesentium!</p>
-                    <a className='button' href=''>Visiter</a>
+                    <Link className='button' to=''>Visiter</Link>
                 </div>
              </div> 
 
@@ -44,7 +47,7 @@ function Habitats() {
                 <div className='habitat-info'>
                     <h3>Singes en folie</h3>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quidem nulla est quos quibusdam natus vitae minus sit. Facere distinctio natus magni qui nisi! Optio eius veritatis voluptatibus reprehenderit maxime? Nesciunt deleniti facilis eaque maiores alias, doloribus nulla provident praesentium!</p>
-                    <a className='button' href=''>Visiter</a>
+                    <Link className='button' to=''>Visiter</Link>
                 </div>
              </div>  
         </section>
@@ -80,7 +83,10 @@ function HomePage() {
         <Hero />
         <Habitats />
         <HomePageServices />
-
+        <h2>Commentaires</h2>
+        <GetComments/>
+        <h2>Laissez un avis !</h2>
+        <NewComment />
         </>
     )
 }

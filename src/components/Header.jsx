@@ -2,69 +2,75 @@ import React, { useState, useEffect } from "react";
 import burger from "@assets/burger.svg";
 import close from "@assets/close.svg";
 import logo from "@assets/logo.png";
+import { Link } from "react-router-dom";
 
 function MobileHeader() {
-    const [isActive,setIsActive] = useState(false)
+    const [isActive, setIsActive] = useState(false);
 
     const handleClick = () => {
-        if (!isActive) {
-            setIsActive(true)
-        } else {
-            setIsActive(false)
-        }
-    }
+        setIsActive(!isActive); // Toggle isActive state
+    };
+
+    const logout = () => {
+        localStorage.removeItem('authToken');
+    };
+
     return (
-        
         <header className='mobile-header'>
-            <a  className='logo' href="/">
-                <img src={logo}/>
-            </a>
+            <Link className='logo' to="/">
+                <img src={logo} alt="Logo" />
+            </Link>
             <button onClick={handleClick} className='mobile-menu-btn burger'>
                 <img src={burger} alt="Menu" />
             </button>
 
-            {isActive ? 
-
-            <nav className="mobile-menu">
-                <button onClick={handleClick} className='mobile-menu-btn close'>
-                <img src={close} alt="" />
-            </button>
-                <ul>
-                    <li><a href="/">Accueil</a></li>
-                    <li><a href="/services">Services</a></li>
-                    <li><a href="/habitats">Habitats</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                </ul>
-                <a className="button" href='/connexion'>Se Connecter</a>
-            </nav>
-
-            : null
-            }
-            
+            {isActive && (
+                <nav className="mobile-menu">
+                    <button onClick={handleClick} className='mobile-menu-btn close'>
+                        <img src={close} alt="Close" />
+                    </button>
+                    <ul>
+                        <li><Link to="/">Accueil</Link></li>
+                        <li><Link to="/services">Services</Link></li>
+                        <li><Link to="/habitats">Habitats</Link></li>
+                        <li><Link to="/contact">Contact</Link></li>
+                    </ul>
+                    {localStorage.getItem('authToken') ?
+                        <Link to='/' className='button' onClick={logout}>Déconnexion</Link> :
+                        <Link to='/connexion' className='button'>Se connecter</Link>}
+                </nav>
+            )}
         </header>
     );
 }
 
 function DesktopHeader() {
+    const logout = () => {
+        localStorage.removeItem('authToken');
+    };
+
     return (
         <header className='desktop-header'>
-            <a className='logo' href="/">
-                <img src={logo}/>
-            </a>
-                <ul>
-                    <li><a href="/">Accueil</a></li>
-                    <li><a href="/services">Services</a></li>
-                    <li><a href="/habitats">Habitats</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                </ul>
-            <a className='button' href='/connexion'>Se connecter</a>
+            <Link className='logo' to="/">
+                <img src={logo} alt="Logo" />
+            </Link>
+            <ul>
+                <li><Link to="/">Accueil</Link></li>
+                <li><Link to="/services">Services</Link></li>
+                <li><Link to="/habitats">Habitats</Link></li>
+                <li><Link to="/contact">Contact</Link></li>
+                {localStorage.getItem('authToken') && <li><Link to='/dashboard'>Dashboard</Link></li>}
+            </ul>
+            {localStorage.getItem('authToken') ?
+                <Link to='/' className='button' onClick={logout}>Déconnexion</Link> :
+                <Link to='/connexion' className='button'>Se connecter</Link>}
         </header>
     );
 }
 
 function Header() {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 850);
-
+    const [authToken,setAuthToken] = useState(localStorage.getItem('authToken')) 
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 850);
@@ -74,6 +80,7 @@ function Header() {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
 
     return isMobile ? <MobileHeader /> : <DesktopHeader />;
 }

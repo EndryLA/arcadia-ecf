@@ -1,9 +1,12 @@
 import axios from 'axios'
 import ConfirmationModal from './ConfirmationModal'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 
 export function DeleteButton({entity,id}) {
     const [open, setOpen] = useState(false)
+    const token = localStorage.getItem('authToken')
+    const config = {headers: {authorization:`Bearer ${token}`}}
 
     const handleConfirm = () => {
         setOpen(true)
@@ -12,7 +15,7 @@ export function DeleteButton({entity,id}) {
         setOpen(false)
     }
     const handleClick = () => {
-        axios.delete(`http://localhost:3000/api/${entity}/${id}`)
+        axios.delete(`http://localhost:3000/api/${entity}/${id}`,config)
         .then(() => {
             console.log(`deleted ${entity} with id of ${id}`)
             window.location.reload()
@@ -30,8 +33,38 @@ export function DeleteButton({entity,id}) {
 
 export function UpdateButton({entity,id}) {
     return (
-        <a href={`/dashboard/${entity}/update/${id}`} className='update-button'>modifier</a>
+        <Link to={`/dashboard/${entity}/update/${id}`} className='update-button'>modifier</Link>
     )
 }
+
+/* THIS IS USED FOR MY COMMENTS CRUD */
+export function ToggleButton({ id, isValid }) {
+    const [active, setActive] = useState(isValid);
+    const token = localStorage.getItem('authToken')
+    const config = {
+        headers: {
+            authorization:`Bearer ${token}`
+        }
+    }
+    const handleClick = () => {
+        setActive(!active);
+    }
+
+    useEffect(() => {
+        axios.put(`http://localhost:3000/api/comments/${id}`,{isValid: active},config)
+        .then(response => console.log(response))
+        .catch(error => console.log(error))
+    },[active])
+
+    return (
+        <div>
+            <label className="switch">
+                <input type="checkbox" onClick={handleClick} checked={active} />
+                <span className="slider round"></span>
+            </label>
+        </div>
+    );
+}
+
 
 export default DeleteButton
