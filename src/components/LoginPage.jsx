@@ -19,8 +19,9 @@ function LoginPage() {
 
                 //setToken(response.data.token)
                 await localStorage.setItem('authToken',response.data.token)
+                await localStorage.setItem('userRole',response.data.role)
 
-                navigate('/dashboard')
+                console.log(response.data.token)
             }
 
         } catch(error){

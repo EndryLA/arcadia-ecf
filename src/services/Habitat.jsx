@@ -4,35 +4,34 @@ import axios from 'axios'
 import {DeleteButton, UpdateButton} from '../components/CrudButtons'
 import {Link} from 'react-router-dom'
 
-
 export function GetHabitats() {
-    const [habitats,setHabitats] = useState([])
+    const [habitats, setHabitats] = useState([]);
 
     useEffect(() => { 
         axios.get('http://localhost:3000/api/habitats/')
-        .then( response => {
-            setHabitats(response.data)
-        })
-        .catch (error => console.log(error)) 
-    }, [])
+            .then(response => {
+                setHabitats(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching habitats:', error);
+            });
+    }, []);
 
     return (
         <section className='habitats-page'>
             <h1>Découvrez nos habitats</h1>
             <div className="card-container">
-            {(habitats && habitats.length > 0) && (
-                habitats.map(habitat => (
+                {habitats.map(habitat => (
                     <div key={habitat._id} className='habitat-card'>
-                        <img src={habitat.image}/>
+                        {/* Adjusted image source URL */}
+                        <img src={`http://localhost:3000/api/images/download/${habitat.image}`} alt={habitat.name} />
                         <h3>{habitat.name}</h3>
                         <Link to={`/habitats/${habitat._id}`} className='button'>Visiter</Link>
                     </div>
-                ))
-            )}
+                ))}
             </div>
         </section>
-
-    )
+    );
 }
 
 export function HabitatCrud() {
@@ -73,14 +72,17 @@ export function HabitatCrud() {
                         <td>{habitat.name}</td>
                         <td>{habitat.commentaire}</td>
                         <td>{habitat.description}</td>
-                        <td><img src={habitat.image}/></td>
-                        <td>{<UpdateButton entity='habitats' id={habitat._id} />}</td>
+                        <td><img src={`http://localhost:3000/api/images/download/${habitat.image}`}/></td>
+                        <td>{<UpdateButton entity='habitats' id={habitat._id} user='admin' content='modifier' />}</td>
                         <td>{<DeleteButton entity='habitats' id={habitat._id}/>}</td>
                     </tr>
                 ))}
             </tbody>
         </table>
-        <Link to='/dashboard/habitats/new' className='button'>Créer Habitat</Link>
+        <div className="buttons-container">
+        <Link to='/admin/habitats/new' className='button'>Créer Habitat</Link>
+        <Link to='/admin/dashboard' className='button cancel-button'>Retour</Link>
+        </div>
 
         </div>
         
@@ -91,27 +93,42 @@ export function CreateHabitat() {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [commentaire, setCommentaire] = useState('')
-    const [image, setImage] = useState('')
+    const [image, setImage] = useState(null)
     const navigate = useNavigate()
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        axios.post('http://localhost:3000/api/habitats/new', {name,description,commentaire,image })
-        .then((res) => {
-            console.log(res)
-        navigate('/dashboard/')
+    const config = {headers: {'Content-Type': 'multipart/form-data'}}
 
-        })
-        .catch(error => console.error(error))
-        console.log(image)
-    }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        try {
+            const formData = new FormData();
+            formData.append('image', image);
+    
+            const uploadResponse = await axios.post('http://localhost:3000/api/upload', formData, config);
+            const uploadedFilename = uploadResponse.data.Image.filename;
+    
+            const habitatData = { name, description, commentaire, image: uploadedFilename };
+    
+            await axios.post('http://localhost:3000/api/habitats/new', habitatData);
+    
+            navigate('/dashboard');
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+    
     const cancelClick = () => {
-        navigate('/dashboard/')
+        navigate('/admin/dashboard')
     }
+
+    const handleFileChange = (e) => {
+        setImage(e.target.files[0])
+    } 
 
     return (
-        <form onSubmit={handleSubmit} method='post'>
+        <form onSubmit={handleSubmit} method='post' encType='multipart/form-data'>
             <div>
                 <label htmlFor='name'>Nom d'habitat</label>
                 <input onChange={(e) => setName(e.target.value)} name='name' type='text'/>
@@ -126,7 +143,8 @@ export function CreateHabitat() {
             </div>
             <div>
                 <label htmlFor='image'>Image</label>
-                <input onChange={(e) => setImage(e.target.value)} name='image' type='text'/>
+                {/* <input onChange={(e) => setImage(e.target.value)} name='image' type='text'/> */}
+                <input onChange={handleFileChange} name='image' type='file'/>
             </div>
             <div className='buttons-container'>
                 <input type='submit' value='Enregistrer' name='submit' className='button'/>

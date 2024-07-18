@@ -98,7 +98,7 @@ export function CreateVetReport() {
             console.log(response)
         })
         .catch(error => console.log(error))
-        navigate('/veterinary')
+        navigate('/veterinary/dashboard')
     }
 
     
@@ -107,10 +107,6 @@ export function CreateVetReport() {
         axios.get(`http://localhost:3000/api/animals/`)
         .then(response => setAnimals(response.data))
         .catch(error => console.error(error))
-
-        axios.get('http://localhost:3000/api/users',config)
-        .then(response => console.log(response))
-        .catch(error => console.log(error))
     },[])
 
     return(
@@ -145,6 +141,7 @@ export function CommentHabitat() {
     const [habitats,setHabitats] = useState([])
     const [habitatId,setHabitatId] = useState('')
     const [comment,setComment] = useState('')
+    const navigate = useNavigate()
 
     const token = localStorage.getItem('authToken')
     const config = {
@@ -166,7 +163,7 @@ export function CommentHabitat() {
     const handleSubmit = (e) => {
         e.preventDefault()
         axios.put(`http://localhost:3000/api/habitats/${habitatId}`,{_id:habitatId,commentaire:comment},config)
-        .then(response => console.log(response))
+        .then(() => navigate('/veterinary/dashboard'))
         .catch(error => console.log(error))
     }
 
@@ -189,3 +186,92 @@ export function CommentHabitat() {
         </form>
     )
 }
+
+
+
+export function GetVetReports() {
+    const [vetReports, setVetReports] = useState([]);
+    const [animals, setAnimals] = useState([]);
+
+    const [selectedDate, setSelectedDate] = useState('');
+    const [selectedAnimalId, setSelectedAnimalId] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [vetReportsResponse, animalsResponse] = await Promise.all([
+                    axios.get('http://localhost:3000/api/veterinary'),
+                    axios.get('http://localhost:3000/api/animals')
+                ]);
+                setVetReports(vetReportsResponse.data);
+                setAnimals(animalsResponse.data);
+            } catch (err) {
+                
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const formatDate = (date) => {
+        const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+        return new Date(date).toLocaleDateString(undefined, options);
+    };
+
+    const animalNames = animals.reduce((acc, animal) => {
+        acc[animal._id] = animal.name;
+        return acc;
+    }, {});
+
+    const handleDateChange = (e) => {
+        setSelectedDate(e.target.value);
+    };
+
+    const handleAnimalChange = (e) => {
+        setSelectedAnimalId(e.target.value);
+    };
+
+    const filteredReports = vetReports.filter(vetReport => {
+        const matchesDate = selectedDate ? vetReport.date.startsWith(selectedDate) : true;
+        const matchesAnimal = selectedAnimalId ? vetReport.animalId === selectedAnimalId : true;
+        return matchesDate && matchesAnimal;
+    });
+
+
+    return (
+        <div className='crud-container'>
+            <div className='filtres'>
+                <label>Filtrer par date:</label>
+                    <input type='date' value={selectedDate} onChange={handleDateChange} />
+                <label> Filtrer par animal</label>
+                    <select value={selectedAnimalId} onChange={handleAnimalChange}>
+                        <option value=''>Tous</option>
+                        {animals.map(animal => (
+                            <option key={animal._id} value={animal._id}>{animal.name}</option>
+                        ))}
+                    </select>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Animal</th>
+                        <th>Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredReports.map(vetReport => (
+                        <tr key={vetReport._id}>
+                            <td>{formatDate(vetReport.date)}</td>
+                            <td>{animalNames[vetReport.animalId]}</td>
+                            <td>{vetReport.detail}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            <Link to='/admin/dashboard' className='button cancel-button'>Retour</Link>
+        </div>
+    );
+}
+
+export default CreateVetReport

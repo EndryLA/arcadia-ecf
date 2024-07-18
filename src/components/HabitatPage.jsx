@@ -30,13 +30,13 @@ export default function HabitatPage() {
     return (
         <section className='habitat-page'>
             <h1>{habitat.name}</h1>
-            <img src={habitat.image}></img>
+            <img src={`http://localhost:3000/api/images/download/${habitat.image}`}></img>
             <p>{habitat.description}</p>
             <h2>Animaux de l'habitat</h2>
             <div className='card-container'>
                 {animals.map(animal => (
                 <div className='animal-card' key={animal._id}>
-                    <img src={animal.image}></img>
+                    <img src={`http://localhost:3000/api/images/download/${animal.image}`}></img>
                     <div>
                         <h3>{animal.name}</h3>
                         <p>{animal.race}</p>

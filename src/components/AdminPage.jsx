@@ -11,6 +11,7 @@ function AdminPage() {
                 <li><Link to='/admin/habitats' className='button'>Voir Habitats</Link></li> 
                 <li><Link to='/admin/animals' className='button'>Voir Animaux</Link></li> 
                 <li><Link to='/admin/schedule' className='button'>Modifier Horaires</Link></li> 
+                <li><Link to='/admin/veterinary-reports' className='button'>Voir Rapports Vétérinaires</Link></li> 
                 </ul>
             </div>
         </>

@@ -66,13 +66,17 @@ export function ServiceCrud() {
                     <tr key={service._id}>
                         <td>{service.title}</td>
                         <td>{service.description}</td>
-                        <td>{<UpdateButton entity='services' id={service._id} />}</td>
+                        <td>{<UpdateButton entity='services' id={service._id} user='admin' content='modifier'/>}</td>
                         <td>{<DeleteButton entity='services' id={service._id}/>}</td>
                     </tr>
                 ))}
             </tbody>
         </table>
-        <Link to='/dashboard/services/new' className='button'>Créer Service</Link>
+        <div className="buttons-container">
+        <Link to='/admin/services/new' className='button'>Créer Service</Link>
+        <Link to='/admin/dashboard' className='button cancel-button'>Retour</Link>
+
+        </div>
 
         </div>
         
@@ -106,7 +110,7 @@ export function UpdateService() {
         axios.put(`http://localhost:3000/api/services/${id}`,{title, description})
         .then (res => {
             console.log(res)
-            navigate('/dashboard/services')
+            navigate('admin/services')
         })
         .catch (error => {
             console.log(error)
@@ -147,7 +151,7 @@ export function CreateService() {
     }
 
     const cancelClick = () => {
-        navigate('/dashboard/services')
+        navigate('/admin/services')
     }
 
     return (

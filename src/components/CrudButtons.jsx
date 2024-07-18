@@ -31,9 +31,9 @@ export function DeleteButton({entity,id}) {
     )
 }
 
-export function UpdateButton({entity,id}) {
+export function UpdateButton({entity,id,user,content}) {
     return (
-        <Link to={`/dashboard/${entity}/update/${id}`} className='update-button'>modifier</Link>
+        <Link to={`/${user}/${entity}/update/${id}`} className='update-button'>{content}</Link>
     )
 }
 

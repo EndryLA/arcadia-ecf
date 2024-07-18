@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import {useNavigate, useParams} from 'react-router-dom'
 import {UpdateButton, DeleteButton, ToggleButton} from '../components/CrudButtons'
+import {Link} from 'react-router-dom'
 
 export function CommentsCrud(){
     const [comments,setComments] = useState([])
@@ -35,6 +36,7 @@ export function CommentsCrud(){
                 ))}
             </tbody>
         </table>
+        <Link to='/employe/dashboard' className='button cancel-button'>Retour</Link>
 
         </div>
     )

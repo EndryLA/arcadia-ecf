@@ -1,7 +1,8 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import {Link, useParams} from 'react-router-dom'
+import {Link, useParams, useNavigate} from 'react-router-dom'
 import { UpdateButton,DeleteButton } from '../components/CrudButtons'
+
 
 
 
@@ -40,7 +41,7 @@ export function FeedingCrud() {
                         <td>{animal.name}</td>
                         <td>{animal.recommendedFood }</td>
                         <td>{animal.foodGrammage }</td>
-                        <td>{<UpdateButton entity='feed' id={animal._id} />}</td>
+                        <td>{<UpdateButton entity='feed' id={animal._id} user='employe' content='nourrir' />}</td>
                     </tr>
                 ))}
             </tbody>
@@ -60,6 +61,7 @@ export function CreateFeedingReport() {
     const [quantity,setQuantity] = useState('')
     const [animal,setAnimal] = useState('')
     const {id} = useParams()
+    const navigate = useNavigate()
 
     const token = localStorage.getItem('authToken')
             const config = {
@@ -70,7 +72,7 @@ export function CreateFeedingReport() {
     
     useEffect(() => {
         axios.get(`http://localhost:3000/api/animals/${id}`,config)
-        .then(response => setAnimal(response.data))
+        .then(() => navigate('/employe/dashboard'))
         .catch(error => console.log(error))
     },[])
 

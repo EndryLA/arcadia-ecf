@@ -39,18 +39,23 @@ export function AnimalsCrud() {
                 {/* Map over habitats and return table rows */}
                 {animals.map(animal => (
                     <tr key={animal._id}>
-                        <td>{animal.habitat}</td>
+                        <td>{animal.habitatId}</td>
                         <td>{animal.race}</td>
                         <td>{animal.name}</td>
                         <td>{animal.state}</td>
-                        <td><img src={animal.image}/></td>
-                        <td>{<UpdateButton entity='animals' id={animal._id} />}</td>
+                        <td><img src={`http://localhost:3000/api/images/download/${animal.image}`}/></td>
+                        <td>{<UpdateButton entity='animals' id={animal._id} content='modifier' user='admin'/>}</td>
                         <td>{<DeleteButton entity='animals' id={animal._id}/>}</td>
                     </tr>
                 ))}
             </tbody>
         </table>
-        <Link to='/dashboard/animals/new' className='button'>Créer Animal</Link>
+        <div className='buttons-container'>
+        <Link to='/admin/animals/new' className='button'>Créer Animal</Link>
+        <Link to='/admin/dashboard' className='button cancel-button'>Retour</Link>
+
+        </div>
+
 
         </div>
         
@@ -62,9 +67,18 @@ export function CreateAnimal() {
     const [race, setRace] = useState('')
     const [name, setName] = useState('')
     const [state, setState] = useState('')
-    const [image, setImage] = useState('')
+    const [image, setImage] = useState(null)
     const navigate = useNavigate()
     const [habitats,setHabitats] = useState([])
+
+    const token = localStorage.getItem('authToken')
+    const config = {
+        headers: {
+            authorization:`Bearer ${token}`,
+            "Content-Type":'multipart/form-data'
+        }
+    }
+
     
 
     useEffect(  () => {
@@ -74,7 +88,28 @@ export function CreateAnimal() {
         }
         fetchData()
     },[])
+
     const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        try {
+            const formData = new FormData();
+            formData.append('image', image);
+    
+            const uploadResponse = await axios.post('http://localhost:3000/api/upload', formData, config);
+            const uploadedFilename = uploadResponse.data.Image.filename;
+    
+            const animalData = { name, habitatId, state, race, image: uploadedFilename };
+    
+            await axios.post('http://localhost:3000/api/animals/new', animalData)
+            .then(() => navigate('/admin/animals'))
+            
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const handleSubmit2 = async (e) => {
         e.preventDefault()
         try {
             const token = localStorage.getItem('authToken')
@@ -93,11 +128,11 @@ export function CreateAnimal() {
     }
 
     const cancelClick = () => {
-        navigate('/dashboard/')
+        navigate('/admin/animals')
     }
 
     return (
-        <form onSubmit={handleSubmit} method='post'>
+        <form onSubmit={handleSubmit} method='post' encType='multipart/data-form'>
             <div>
                 <label htmlFor='habitatId'>Habitat</label>
                 <select onChange={e => setHabitatId(e.target.value)} name='habitatId' value={habitatId}>
@@ -121,7 +156,7 @@ export function CreateAnimal() {
             </div>
             <div>
                 <label htmlFor='image'>Image</label>
-                <input onChange={(e) => setImage(e.target.value)} name='image' type='text'/>
+                <input onChange={(e) => setImage(e.target.files[0])} name='image' type='file'/>
             </div>
             <div className='buttons-container'>
                 <input type='submit' value='Enregistrer' name='submit' className='button'/>
@@ -167,7 +202,7 @@ export function UpdateAnimal() {
         axios.put(`http://localhost:3000/api/animals/${id}`,{name,habitatId, image, race, state})
         .then (res => {
             console.log(res)
-            navigate('/dashboard')
+            navigate('/admin/dashboard')
         })
         .catch (error => {
             console.log(error)
@@ -175,7 +210,7 @@ export function UpdateAnimal() {
     }
 
     const cancelClick = () => {
-        navigate('/dashboard/')
+        navigate('/admin/dashboard/')
     }
 
         return (

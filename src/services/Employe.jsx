@@ -51,14 +51,18 @@ export function EmployesCrud() {
                         <td>{employe.username}</td>
                         <td>{employe.lastname}</td>
                         <td>{employe.firstname}</td>
-                        <td>{employe.role}</td>
-                        <td>{<UpdateButton entity='employes' id={employe._id} />}</td>
+                        <td>{employe.role === 'veterinary' ? 'vétérinaire' : 'employé'}</td>
+                        <td>{<UpdateButton entity='employes' id={employe._id} content='modifier' user='admin'/>}</td>
                         <td>{<DeleteButton entity='users' id={employe._id}/>}</td>
                     </tr>
                 ))}
             </tbody>
         </table>
+        <div className='buttons-container'>
         <Link to='/dashboard/employes/new' className='button'>Créer Employé</Link>
+        <Link to='/admin/dashboard/' className='button cancel-button'>Retour</Link>
+
+        </div>
 
         </div>
         
@@ -93,7 +97,7 @@ export function CreateEmploye() {
 
 
     const cancelClick = () => {
-        navigate('/dashboard')
+        navigate('/admin/dashboard')
     }
 
     return (
@@ -172,7 +176,7 @@ export function UpdateEmploye() {
     }
 
     const cancelClick = () => {
-        navigate('/dashboard/')
+        navigate('/admin/dashboard')
     }
 
         return (

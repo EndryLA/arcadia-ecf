@@ -15,7 +15,7 @@ import AnimalsCrud, { CreateAnimal, UpdateAnimal } from './services/Animal'
 
 import './styles.css'
 import CommentsCrud from './services/Comment'
-import { CommentHabitat, CreateVetReport, VetReportCrud } from './services/VetReport'
+import { CommentHabitat, CreateVetReport, GetVetReports, VetReportCrud } from './services/VetReport'
 import HabitatPage from './components/HabitatPage'
 import { CreateFeedingReport, FeedingCrud } from './services/FeedingReport'
 import EmployePage from './components/EmployePage'
@@ -53,6 +53,9 @@ function App () {
         <Route path='/admin/animals/' element={<AnimalsCrud />} />
         <Route path='/admin/animals/new' element={<CreateAnimal />} />
         <Route path={`/admin/animals/update/:id`} element={<UpdateAnimal/>} />
+
+        <Route path='/admin/veterinary-reports/' element={<GetVetReports />} />
+
 
         {/* Employe Routes */ }
 
