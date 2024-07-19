@@ -3,7 +3,10 @@
 
 function ServicePage() {
     return (
+        <>
+        <h1>Nos Services</h1>
         <GetServices />
+        </>
     )
 }
 

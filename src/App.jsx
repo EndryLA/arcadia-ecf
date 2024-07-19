@@ -20,6 +20,7 @@ import HabitatPage from './components/HabitatPage'
 import { CreateFeedingReport, FeedingCrud } from './services/FeedingReport'
 import EmployePage from './components/EmployePage'
 import VeterinaryPage from './components/VeterinaryPage'
+import { AnimalPage } from './components/AnimalPage'
 
 function App () {
   
@@ -36,6 +37,7 @@ function App () {
         <Route path='/services' element={<ServicePage/>}/>
         <Route path='/habitats' element={<HabitatsPage/>}/>
         <Route path='/habitats/:id' element={<HabitatPage/>}/>
+        <Route path='/animals/:id' element={<AnimalPage/>}/>
 
         {/* Admin Routes */ }
 
