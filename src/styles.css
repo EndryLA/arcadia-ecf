@@ -12,7 +12,14 @@ body {
     background-color: #E5E3D9;
 }
 
-
+/* Ces propriétés ont été ajoutés car je n'arrivais pas à avoir mon footer 
+constamment en bas*/
+#root {
+  display:flex;
+  flex-direction: column;
+  min-height:100vh;
+  justify-content: space-between;
+}
 
 /* DEFAULT BEHAVIOUR */
 
@@ -344,12 +351,12 @@ h2 {
     margin:20px;
     box-shadow:1px 1px 10px rgba(0,0,0,.2);
     align-items: center;
-    border-radius:10px;
 
     >p {
       font-family:'Montserrat',sans-serif;
       padding:1rem;
       text-align: center;
+      text-overflow: ellipsis;
     }
 
     >h3 {
@@ -456,6 +463,7 @@ h2 {
 form {
   max-width:600px;
   margin:auto;
+  width:90vw;
 }
 
 form h1 {
@@ -510,21 +518,31 @@ select {
 /* Footer */
 
 footer {
+  justify-self: end;
   display:flex;
+  flex-direction: column;
   background-color: #202020;
   color:#EBE9ED;
   font-family: 'Montserrat',sans-serif;
   justify-content: space-around;
   align-items: center;
   padding:20px 0 0px 0;
-  position:relative;
-  bottom:0;
+  position:sticky;
+  bottom:0px;
   width:100vw;
-  margin-top:20px;
+  margin-top:40px;
 
   .copyright-notice {
     font-size:12px;
   }
+}
+
+footer .footer-content {
+  display:flex;
+  flex-wrap:wrap;
+  align-items: center;
+  justify-content: space-around;
+  width:100%;
 }
 
 /* CRUD STYLES */
@@ -747,4 +765,11 @@ div:has(.dashboard-navigation) {
     outline:none;
     border:none;
   }
+}
+
+.errors-div {
+  color:#e74c3c;
+  font-family:'Inter',sans-serif;
+  font-weight:600;
+  font-size:12px;
 }

@@ -1,11 +1,12 @@
 import axios from 'axios'
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext} from 'react'
 import {DeleteButton, UpdateButton} from '../components/CrudButtons'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 
 export function EmployesCrud() {
 
     const [employes, setEmploye] = useState([])
+    const navigate = useNavigate()
 
     const handleDelete = () => {
         <DeleteService />
@@ -14,22 +15,26 @@ export function EmployesCrud() {
     
 
     useEffect(() => {
-
+    const userRole = localStorage.getItem('userRole')
     const token = localStorage.getItem('authToken')
     const config = {
         headers: {
             authorization:`Bearer ${token}`
         }
     }
-        
+    if (userRole === 'admin') {
+
         axios.get('http://localhost:3000/api/users/',config)
         .then( res => {
             setEmploye(res.data)
-            console.log('resdata :' ,res.data)
         })
         .catch( error => {
             console.log(error)
         })
+    } else {
+        navigate('/')
+    }
+        
     },[])
 
     return (

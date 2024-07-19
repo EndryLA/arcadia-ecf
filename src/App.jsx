@@ -2,7 +2,7 @@ import HomePage from './components/HomePage'
 import LoginPage from './components/LoginPage'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom'
 import ContactPage from './components/ContactPage'
 import ServicePage from './components/ServicePage'
 import AdminPage from './components/AdminPage'
@@ -22,6 +22,9 @@ import EmployePage from './components/EmployePage'
 import VeterinaryPage from './components/VeterinaryPage'
 
 function App () {
+  
+  const userRole = localStorage.getItem('userRole')
+
   return (
     <>
     <Router>
@@ -32,11 +35,12 @@ function App () {
         <Route path='/contact' element={<ContactPage/>}/>
         <Route path='/services' element={<ServicePage/>}/>
         <Route path='/habitats' element={<HabitatsPage/>}/>
-        <Route path='/admin' element={<AdminPage/>}/>
         <Route path='/habitats/:id' element={<HabitatPage/>}/>
 
         {/* Admin Routes */ }
 
+        {userRole === 'admin' ? (
+          <>
         <Route path='/admin/dashboard' element={<AdminPage />} />
         <Route path='/admin/services' element={<ServiceCrud />} />
         <Route path='/admin/services/new' element={<CreateService />} />
@@ -55,7 +59,11 @@ function App () {
         <Route path={`/admin/animals/update/:id`} element={<UpdateAnimal/>} />
 
         <Route path='/admin/veterinary-reports/' element={<GetVetReports />} />
-
+        </>
+        ) : (
+          <>
+          </>
+        )}
 
         {/* Employe Routes */ }
 

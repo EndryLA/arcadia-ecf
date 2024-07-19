@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {useState,useEffect} from 'react'
+import {useState,useEffect,useContext} from 'react'
 import {useNavigate} from 'react-router-dom'
 
 
@@ -16,16 +16,15 @@ function LoginPage() {
             const response = await axios.post('http://localhost:3000/api/users/auth',{username,password})
             
             if(response) {
-
-                //setToken(response.data.token)
-                await localStorage.setItem('authToken',response.data.token)
-                await localStorage.setItem('userRole',response.data.role)
-
-                console.log(response.data.token)
+            const {firstname, lastname, userId, role} = response.data
+            localStorage.setItem('authToken',response.data.token)
+            
+            localStorage.setItem('userRole',role)
+            navigate('/')
             }
 
         } catch(error){
-            setError('Login Failed :' + error.message)
+            setError('La tentative de connexion a échoué :' + error.message)
             
         }
     }
@@ -48,10 +47,15 @@ function LoginPage() {
                 <label htmlFor='password'>Mot de passe </label>
                 <input type='password' name='password' id='password' onChange = {(e) => setPassword(e.target.value)}/>
             </div>
+            <div className='errors-div'>
+                {error && <p>Adresse mail ou mot de passe invalide </p>}
+            </div>
             <input type='submit' name='submit-button' className='button' value='Se connecter'/>
         </form>
     )
 
 }
+
+
 
 export default LoginPage
