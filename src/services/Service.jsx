@@ -104,13 +104,21 @@ export function UpdateService() {
         })
     },[])
 
+    const token = localStorage.getItem('authToken')
+    const config = {
+        headers: {
+            authorization:`Bearer ${token}`,
+        }
+    }
+    const userRole = localStorage.getItem('userRole')
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put(`http://localhost:3000/api/services/${id}`,{title, description})
+        axios.put(`http://localhost:3000/api/services/${id}`,{title, description},config)
         .then (res => {
             console.log(res)
-            navigate('admin/services')
+            navigate(`/${userRole}/services`)
         })
         .catch (error => {
             console.log(error)
@@ -127,7 +135,10 @@ export function UpdateService() {
                     <label htmlFor='description'>Description</label>
                     <textarea  onChange= {(e) => setDescription(e.target.value)} value = {description}  name='description'></textarea>
                 </div>
+                <div className='buttons-container'>
                 <input type='submit' className='button' value='Enregistrer'/>
+                <Link to={`/${userRole}/services`} className='button cancel-button'>Retour</Link>
+                </div>
             </form>
         )
         

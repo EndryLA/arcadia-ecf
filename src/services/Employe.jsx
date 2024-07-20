@@ -64,7 +64,7 @@ export function EmployesCrud() {
             </tbody>
         </table>
         <div className='buttons-container'>
-        <Link to='/dashboard/employes/new' className='button'>Créer Employé</Link>
+        <Link to='/admin/employes/new' className='button'>Créer Employé</Link>
         <Link to='/admin/dashboard/' className='button cancel-button'>Retour</Link>
 
         </div>
@@ -94,7 +94,7 @@ export function CreateEmploye() {
             const userData = {username,password,lastname,firstname,role}
 
             axios.post('http://localhost:3000/api/users/new', userData, config)
-            .then((response)=> console.log(response))
+            .then(() => {navigate('/admin/employes')})
         } catch(error) {
             console.log(error)
         }
@@ -149,16 +149,17 @@ export function UpdateEmploye() {
     const {id} = useParams()
     const token = localStorage.getItem('authToken')
     const config = {headers: {authorization:`Bearer ${token}`}}
+    const [formData,setFormData] = ('')
 
     useEffect(() => {
         axios.get(`http://localhost:3000/api/users/${id}`,config)
         .then(response => {
             console.log('useEffet : ',response)
             setUsername(response.data.username)
-            setPassword(response.data.password)
+            setPassword('')
             setLastname(response.data.lastname)
             setFirstname(response.data.firstname)
-            setRole(response.data.setRole)
+            setRole(response.data.role)
         })
         .catch(error => {
             console.error(error)
@@ -166,14 +167,19 @@ export function UpdateEmploye() {
     },[])
 
     
-
-
+   
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put(`http://localhost:3000/api/animals/${id}`,{username,password, lastname, firstname, role},config)
+
+
+        console.log(password)
+
+
+
+        axios.put(`http://localhost:3000/api/users/${id}`,{username, firstname,lastname, role},config)
         .then (res => {
             console.log(res)
-            navigate('/dashboard')
+            navigate('/admin/employes')
         })
         .catch (error => {
             console.log(error)
@@ -185,15 +191,12 @@ export function UpdateEmploye() {
     }
 
         return (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} >
             <div>
-                <label htmlFor='email'>Adresse mail</label>
-                <input onChange={(e) => setEmail(e.target.value)} name='email' type='text' value={username}/>
+                <label htmlFor='username'>Adresse mail</label>
+                <input onChange={(e) => setUsername(e.target.value)} name='username' type='text' value={username}/>
             </div>
-            <div>
-                <label htmlFor='password'> Nouveau mot de passe</label>
-                <input onChange={(e) => setPassword(e.target.value)} name='password' type='password'/>
-            </div>
+            
             <div>
                 <label htmlFor='lastname'>Nom</label>
                 <input onChange={(e) => setLastname(e.target.value)} name='lastname' type='text'value={lastname}/>
@@ -204,14 +207,14 @@ export function UpdateEmploye() {
             </div>
             <div>
                 <label htmlFor='role'>Poste</label>
-                <select name='role' onChange= {(e) => setRole(e.target.value)}>
+                <select name='role' onChange= {(e) => setRole(e.target.value)} value={role}>
                     <option value='employe'>Employé</option>
                     <option value='veterinary'>vétérinaire</option>
                 </select>
             </div>
             <div className='buttons-container'>
                 <input type='submit' value='Enregistrer' name='submit' className='button'/>
-                <input onClick = {cancelClick} type='submit' value='Annuler' name='cancel-submit' className='button cancel-button'/>
+                <input onClick = {cancelClick}  value='Annuler' name='cancel-submit' className='button cancel-button'/>
             </div>
         </form>
         )   

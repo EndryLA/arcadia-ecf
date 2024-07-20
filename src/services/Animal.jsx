@@ -79,8 +79,6 @@ export function CreateAnimal() {
         }
     }
 
-    
-
     useEffect(  () => {
         async function  fetchData() {
             const response = await axios.get('http://localhost:3000/api/habitats')
@@ -108,24 +106,6 @@ export function CreateAnimal() {
             console.error('Error:', error);
         }
     };
-
-    const handleSubmit2 = async (e) => {
-        e.preventDefault()
-        try {
-            const token = localStorage.getItem('authToken')
-            const config = {
-                headers: {
-                    authorization:`Bearer ${token}`
-                }
-            }
-            console.log('name:', name,'habitatId:',habitatId,image,state,race)
-            axios.post('http://localhost:3000/api/animals/new', {name, habitatId, image, state, race}, config)
-            .then(() => navigate('/dashboard'))
-            .catch(error => {console.log(error)})
-        } catch(error) {
-            console.log(error)
-        }
-    }
 
     const cancelClick = () => {
         navigate('/admin/animals')
@@ -197,24 +177,69 @@ export function UpdateAnimal() {
     },[])
 
 
-    const handleSubmit = (e) => {
+   /*  const handleSubmit = (e) => {
         e.preventDefault()
         axios.put(`http://localhost:3000/api/animals/${id}`,{name,habitatId, image, race, state})
         .then (res => {
             console.log(res)
-            navigate('/admin/dashboard')
+            navigate('/admin/animals')
         })
         .catch (error => {
             console.log(error)
         })
+    } */
+
+    const token = localStorage.getItem('authToken')
+    const config = {
+        headers: {
+            authorization:`Bearer ${token}`,
+            "Content-Type":'application/json'
+        }
     }
 
+    const handleSubmit2 = async (e) => {
+        e.preventDefault();
+
+        try {
+            let uploadedFilename = image;
+
+            if (image instanceof File) {
+                const formData = new FormData();
+                formData.append('image', image);
+
+                const uploadConfig = {
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                        "Content-Type": 'multipart/form-data'
+                    }
+                };
+
+                const uploadResponse = await axios.post('http://localhost:3000/api/upload', formData, uploadConfig);
+                uploadedFilename = uploadResponse.data.image.filename;
+            }
+
+            const animalData = { name, habitatId, state, race, image: uploadedFilename };
+            const updateConfig = {
+                headers: {
+                    authorization: `Bearer ${token}`,
+                    "Content-Type": 'application/json'
+                }
+            };
+
+            const response = await axios.put(`http://localhost:3000/api/animals/${id}`, animalData, updateConfig);
+            console.log(response);
+            navigate('/admin/animals');
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
     const cancelClick = () => {
-        navigate('/admin/dashboard/')
+        navigate('/admin/animals/')
     }
 
         return (
-            <form onSubmit={handleSubmit} method='post'>
+            <form onSubmit={handleSubmit2} encType='multipart/form-data'>
             <div>
                 <label htmlFor='habitatId'>Habitat</label>
                 <select onChange={e => setHabitatId(e.target.value)} name='habitatId' value={habitatId}>
@@ -237,7 +262,7 @@ export function UpdateAnimal() {
             </div>
             <div>
                 <label htmlFor='image'>Image</label>
-                <input onChange={(e) => setImage(e.target.value)} name='image' type='text' value={image}/>
+                <input onChange={(e) => setImage(e.target.files[0])} name='image' type='file' />
             </div>
             <div className='buttons-container'>
                 <input type='submit' value='Enregistrer' name='submit' className='button'/>
@@ -248,4 +273,74 @@ export function UpdateAnimal() {
         
 }
 
+export function AnimalVisits() {
+    const [animals, setAnimals] = useState([])
+    const [sortOrder, setSortOrder] = useState('decroissant');
+
+        useEffect(() => {
+            axios.get('http://localhost:3000/api/animals')
+            .then( res => {
+                setAnimals(res.data)
+            })
+            .catch( error => {
+                console.log(error)
+            })
+        },[])
+
+        const sortedAnimals = [...animals].sort((a, b) => {
+            if (sortOrder === 'croissant') {
+                return parseInt(a.visits) - parseInt(b.visits);
+            } else {
+                return parseInt(b.visits) - parseInt(a.visits);
+            }
+        });
+
+        console.log(sortedAnimals)
+
+    return (
+        <div className='crud-container'>
+        <div className='filtres'>
+                <label>Trier par visites:</label>
+                <select
+                    value={sortOrder}
+                    onChange={(e) => setSortOrder(e.target.value)}
+                >
+                    <option value='croissant'>Croissant</option>
+                    <option value='decroissant'>Décroissant</option>
+                </select>
+            </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Habitat</th>
+                    <th>Nom</th>
+                    <th>Race</th>
+                    <th>visites</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                {/* Map over habitats and return table rows */}
+                {sortedAnimals.map(animal => (
+                    <tr key={animal._id}>
+                        <td>{animal.habitatId}</td>
+                        <td>{animal.name}</td>
+                        <td>{animal.race}</td>
+                        <td>{animal.visits}</td>
+                        <td><img src={`http://localhost:3000/api/images/download/${animal.image}`}/></td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+        <div className='buttons-container'>
+        <Link to='/admin/dashboard' className='button cancel-button'>Retour</Link>
+
+        </div>
+
+
+        </div>
+       
+    )
+}
 export default AnimalsCrud

@@ -19,6 +19,7 @@ function AdminPage() {
                     <li><Link to='/admin/animals' className='button'>Voir Animaux</Link></li> 
                     <li><Link to='/admin/schedule' className='button'>Modifier Horaires</Link></li> 
                     <li><Link to='/admin/veterinary-reports' className='button'>Voir Rapports Vétérinaires</Link></li> 
+                    <li><Link to='/admin/animals/visits' className='button'>Voir Visites</Link></li> 
                     </ul>
                 </div>
             </>

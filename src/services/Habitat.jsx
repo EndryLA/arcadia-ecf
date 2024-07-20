@@ -161,8 +161,7 @@ export function UpdateHabitat() {
     const [image, setImage] = useState('')
     const navigate = useNavigate()
     const {id} = useParams()
-    console.log(id)
-
+    const userRole=localStorage.getItem('userRole')
     useEffect(() => {
         axios.get(`http://localhost:3000/api/habitats/${id}`)
         .then(response => {
@@ -210,6 +209,7 @@ export function UpdateHabitat() {
             </div>
             <div className='buttons-container'>
                 <input type='submit' value='Enregistrer' name='submit' className='button'/>
+                <Link to={`/${userRole}/services`} className='button cancel-button'>Retour</Link>
             </div>
         </form>
         )

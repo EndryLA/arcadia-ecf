@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import burger from "@assets/burger.svg";
 import close from "@assets/close.svg";
 import logo from "@assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function MobileHeader() {
     const [isActive, setIsActive] = useState(false);
@@ -45,8 +45,23 @@ function MobileHeader() {
 }
 
 function DesktopHeader() {
+    const navigate = useNavigate()
+    const [role,setRole] = (useState(localStorage.getItem('userRole')))
+
     const logout = () => {
         localStorage.removeItem('authToken');
+        localStorage.removeItem('userRole')
+        navigate('/')
+    };
+
+    const dashboardNavigate = () => {
+        if (role === 'admin') {
+            return '/admin/dashboard';
+        } else if (role === 'employee') {
+            return '/employe/dashboard';
+        } else {
+            return '/veterinary/dashboard';
+        }
     };
 
     return (
@@ -59,7 +74,7 @@ function DesktopHeader() {
                 <li><Link to="/services">Services</Link></li>
                 <li><Link to="/habitats">Habitats</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
-                {localStorage.getItem('authToken') && <li><Link to='/dashboard'>Dashboard</Link></li>}
+                {localStorage.getItem('authToken') && <li><Link to={dashboardNavigate()}>Dashboard</Link></li>}
             </ul>
             {localStorage.getItem('authToken') ?
                 <Link to='/' className='button' onClick={logout}>Déconnexion</Link> :
@@ -80,6 +95,7 @@ function Header() {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
 
 
     return isMobile ? <MobileHeader /> : <DesktopHeader />;

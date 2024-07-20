@@ -9,6 +9,9 @@ export function AnimalPage() {
     const [vetReports, setVetReports] = useState([]);
     const {id} = useParams()
 
+    const userRole = localStorage.getItem('oui')
+
+
     useEffect(() => {
         axios.get(`http://localhost:3000/api/animals/${id}`)
         .then(response => {
@@ -18,6 +21,14 @@ export function AnimalPage() {
             console.log(error)
         })
         
+    },[])
+
+    useEffect(() => {
+        if (userRole !== 'admin' || 'veterinary' || 'employe') {
+            axios.post(`http://localhost:3000/api/animals/visit/${id}`)
+            .then(response => console.log(response.data))
+            .catch(error => console.log(error))
+        }
     },[])
 
     useEffect(()=>  {
