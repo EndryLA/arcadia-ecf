@@ -21,6 +21,7 @@ import { CreateFeedingReport, FeedingCrud } from './services/FeedingReport'
 import EmployePage from './components/EmployePage'
 import VeterinaryPage from './components/VeterinaryPage'
 import { AnimalPage } from './components/AnimalPage'
+import UpdateSchedule, { CreateSchedule } from './services/Schedule'
 
 function App () {
   
@@ -60,6 +61,7 @@ function App () {
         <Route path='/admin/animals/new' element={<CreateAnimal />} />
         <Route path={`/admin/animals/update/:id`} element={<UpdateAnimal/>} />
         <Route path={`/admin/animals/visits`} element={<AnimalVisits/>} />
+        <Route path={`/admin/schedule`} element={<UpdateSchedule/>} />
 
         <Route path='/admin/veterinary-reports/' element={<GetVetReports />} />
         </>
