@@ -147,55 +147,49 @@ export function CreateAnimal() {
 }
 
 export function UpdateAnimal() {
-    const [habitatId, setHabitatId] = useState('')
-    const [name, setName] = useState('')
-    const [race, setRace] = useState('')
-    const [image, setImage] = useState('')
-    const [state, setState] = useState('')
-    const [habitats,setHabitats] = useState([])
-    const navigate = useNavigate()
-    const {id} = useParams()
+    const [habitatId, setHabitatId] = useState('');
+    const [name, setName] = useState('');
+    const [race, setRace] = useState('');
+    const [image, setImage] = useState('');
+    const [state, setState] = useState('');
+    const [habitats, setHabitats] = useState([]);
+    const navigate = useNavigate();
+    const { id } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/animals/${id}`)
-        .then(response => {
-            console.log('useEffet : ',response)
-            setHabitatId(response.data.habitatId)
-            setName(response.data.name)
-            setImage(response.data.image)
-            setState(response.data.state)
-            setRace(response.data.race)
-        })
-        .catch(error => {
-            console.error(error)
-        })
-        axios.get('http://localhost:3000/api/habitats')
-        .then(response => {
-            setHabitats(response.data)
-        })
-        .catch(error => console.log(error))
-    },[])
+        const fetchAnimal = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/api/animals/${id}`);
+                setHabitatId(response.data.habitatId);
+                setName(response.data.name);
+                setImage(response.data.image);
+                setState(response.data.state);
+                setRace(response.data.race);
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
+        const fetchHabitats = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/api/habitats');
+                setHabitats(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
-   /*  const handleSubmit = (e) => {
-        e.preventDefault()
-        axios.put(`http://localhost:3000/api/animals/${id}`,{name,habitatId, image, race, state})
-        .then (res => {
-            console.log(res)
-            navigate('/admin/animals')
-        })
-        .catch (error => {
-            console.log(error)
-        })
-    } */
+        fetchAnimal();
+        fetchHabitats();
+    }, [id]);
 
-    const token = localStorage.getItem('authToken')
+    const token = localStorage.getItem('authToken');
     const config = {
         headers: {
-            authorization:`Bearer ${token}`,
-            "Content-Type":'application/json'
+            authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
         }
-    }
+    };
 
     const handleSubmit2 = async (e) => {
         e.preventDefault();
@@ -210,69 +204,69 @@ export function UpdateAnimal() {
                 const uploadConfig = {
                     headers: {
                         authorization: `Bearer ${token}`,
-                        "Content-Type": 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data'
                     }
                 };
 
                 const uploadResponse = await axios.post('http://localhost:3000/api/upload', formData, uploadConfig);
-                uploadedFilename = uploadResponse.data.image.filename;
+                uploadedFilename = uploadResponse.data.filename; 
             }
 
             const animalData = { name, habitatId, state, race, image: uploadedFilename };
-            const updateConfig = {
-                headers: {
-                    authorization: `Bearer ${token}`,
-                    "Content-Type": 'application/json'
-                }
-            };
 
-            const response = await axios.put(`http://localhost:3000/api/animals/${id}`, animalData, updateConfig);
+            const response = await axios.put(`http://localhost:3000/api/animals/${id}`, animalData, config);
             console.log(response);
-            navigate('/admin/animals');
         } catch (error) {
             console.error('Error:', error);
         }
     };
 
     const cancelClick = () => {
-        navigate('/admin/animals/')
-    }
+        navigate('/admin/animals');
+    };
 
-        return (
-            <form onSubmit={handleSubmit2} encType='multipart/form-data'>
+    
+
+    return (
+        <form onSubmit={handleSubmit2} encType='multipart/form-data'>
             <div>
                 <label htmlFor='habitatId'>Habitat</label>
                 <select onChange={e => setHabitatId(e.target.value)} name='habitatId' value={habitatId}>
                     {habitats.map((habitat) => (
-                        <option key = {habitat._id} value={habitat._id}>{habitat.name}</option>
+                        <option key={habitat._id} value={habitat._id}>{habitat.name}</option>
                     ))}
                 </select>
             </div>
             <div>
                 <label htmlFor='race'>Race</label>
-                <input onChange={(e) => setRace(e.target.value)} name='race' type='text' value={race}/>
+                <input onChange={(e) => setRace(e.target.value)} name='race' type='text' value={race} />
             </div>
             <div>
                 <label htmlFor='name'>Nom</label>
-                <input onChange={(e) => setName(e.target.value)} name='name' type='text' value={name}/>
+                <input onChange={(e) => setName(e.target.value)} name='name' type='text' value={name} />
             </div>
             <div>
                 <label htmlFor='state'>Etat</label>
-                <input onChange={(e) => setState(e.target.value)} name='state' type='text' value={state}/>
+                <input onChange={(e) => setState(e.target.value)} name='state' type='text' value={state} />
             </div>
             <div>
                 <label htmlFor='image'>Image</label>
-                <input onChange={(e) => setImage(e.target.files[0])} name='image' type='file' />
+                <input 
+    onChange={(e) => {
+        console.log(e.target.files[0]); // Affiche l'objet File dans la console
+        setImage(e.target.files[0]);
+    }} 
+    name='image' 
+    type='file' 
+/>
             </div>
             <div className='buttons-container'>
-                <input type='submit' value='Enregistrer' name='submit' className='button'/>
-                <input onClick = {cancelClick} type='submit' value='Annuler' name='cancel-submit' className='button cancel-button'/>
+                <input type='submit' value='Enregistrer' name='submit' className='button' />
+                <input onClick={cancelClick} type='button' value='Annuler' name='cancel-submit' className='button cancel-button' />
             </div>
         </form>
-        )
-        
+    );
 }
-
 export function AnimalVisits() {
     const [animals, setAnimals] = useState([])
     const [sortOrder, setSortOrder] = useState('decroissant');
