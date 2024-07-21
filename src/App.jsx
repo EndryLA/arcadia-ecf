@@ -17,7 +17,7 @@ import './styles.css'
 import CommentsCrud from './services/Comment'
 import { CommentHabitat, CreateVetReport, GetVetReports, VetReportCrud } from './services/VetReport'
 import HabitatPage from './components/HabitatPage'
-import { CreateFeedingReport, FeedingCrud } from './services/FeedingReport'
+import { CreateFeedingReport, FeedingCrud, GetFeedingReports } from './services/FeedingReport'
 import EmployePage from './components/EmployePage'
 import VeterinaryPage from './components/VeterinaryPage'
 import { AnimalPage } from './components/AnimalPage'
@@ -73,13 +73,21 @@ function App () {
         {/* Employe Routes */ }
 
         {userRole === 'employe' ? (
+<<<<<<< HEAD
         <>
 
+=======
+          <>
+>>>>>>> contact
         <Route path='employe/dashboard' element={<EmployePage/>}/>
         <Route path={`employe/comments`} element={<CommentsCrud/>} />
         <Route path={'employe/feed'} element={<FeedingCrud/>}/>
         <Route path={'employe/services'} element={<ServiceCrud/>}/>
+        <Route path={'employe/services/new'} element={<CreateService/>}/>
         <Route path={'employe/feed/update/:id'} element={<CreateFeedingReport/>}/>
+        </>
+
+        ) : <></>}
 
         </>
         ) : <>
@@ -89,12 +97,18 @@ function App () {
         {/*Veterinary Routes*/}
 
         {userRole === 'veterinary' ? (
+<<<<<<< HEAD
           <>
+=======
+        <>
+>>>>>>> contact
         <Route path={`/veterinary/dashboard`} element={<VeterinaryPage/>} />
-        <Route path={`/veterinary/reports`} element={<VetReportCrud/>} />
+        <Route path={`/veterinary/reports`} element={<GetFeedingReports/>} />
         <Route path={`/veterinary/habitats/comment`} element={<CommentHabitat/>} />
         <Route path={`/veterinary/new-report/`} element={<CreateVetReport/>} />
         <Route path={`/veterinary/update/:id`} element={<CreateVetReport/>} />
+        </>)
+        : <></>}
 
           </>
         ) : <>
@@ -115,8 +129,8 @@ function App () {
 
 
       </Routes>
-    </Router>
     <Footer />
+    </Router>
     </>
   )
 }

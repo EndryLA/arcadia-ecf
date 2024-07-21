@@ -18,7 +18,6 @@ function LoginPage() {
             if(response) {
             const {firstname, lastname, userId, role} = response.data
             localStorage.setItem('authToken',response.data.token)
-            
             localStorage.setItem('userRole',role)
             navigate('/')
             }

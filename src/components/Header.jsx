@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 function MobileHeader() {
     const [isActive, setIsActive] = useState(false);
+    const userRole = localStorage.getItem('userRole')
+
 
     const handleClick = () => {
         setIsActive(!isActive); // Toggle isActive state
@@ -13,6 +15,9 @@ function MobileHeader() {
 
     const logout = () => {
         localStorage.removeItem('authToken');
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('userData');
+        Navigate('/')
     };
 
     return (
@@ -30,10 +35,12 @@ function MobileHeader() {
                         <img src={close} alt="Close" />
                     </button>
                     <ul>
-                        <li><Link to="/">Accueil</Link></li>
-                        <li><Link to="/services">Services</Link></li>
-                        <li><Link to="/habitats">Habitats</Link></li>
-                        <li><Link to="/contact">Contact</Link></li>
+                        <li onClick={handleClick}><Link to="/">Accueil</Link></li>
+                        <li onClick={handleClick}><Link to="/services">Services</Link></li>
+                        <li onClick={handleClick}><Link to="/habitats">Habitats</Link></li>
+                        <li onClick={handleClick}><Link to="/contact">Contact</Link></li>
+                       {localStorage.getItem('authToken') && <li onClick={handleClick}><Link to={`${userRole}/dashboard`}>Dashboard</Link></li>}
+
                     </ul>
                     {localStorage.getItem('authToken') ?
                         <Link to='/' className='button' onClick={logout}>Déconnexion</Link> :
@@ -45,6 +52,7 @@ function MobileHeader() {
 }
 
 function DesktopHeader() {
+<<<<<<< HEAD
     const navigate = useNavigate()
     const [role,setRole] = (useState(localStorage.getItem('userRole')))
 
@@ -62,6 +70,17 @@ function DesktopHeader() {
         } else {
             return '/veterinary/dashboard';
         }
+=======
+    const userRole = localStorage.getItem('userRole')
+
+
+    const logout = () => {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('userData');
+        Navigate('/')
+
+>>>>>>> contact
     };
 
     return (
@@ -74,7 +93,11 @@ function DesktopHeader() {
                 <li><Link to="/services">Services</Link></li>
                 <li><Link to="/habitats">Habitats</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
+<<<<<<< HEAD
                 {localStorage.getItem('authToken') && <li><Link to={dashboardNavigate()}>Dashboard</Link></li>}
+=======
+                {localStorage.getItem('authToken') && <li><Link to={`${userRole}/dashboard`}>Dashboard</Link></li>}
+>>>>>>> contact
             </ul>
             {localStorage.getItem('authToken') ?
                 <Link to='/' className='button' onClick={logout}>Déconnexion</Link> :

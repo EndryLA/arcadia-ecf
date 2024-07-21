@@ -123,6 +123,10 @@ h2 {
     object-fit: cover;
     object-position: center;
   }
+
+  .button {
+    margin:10px;
+  }
 }
 
 .button {

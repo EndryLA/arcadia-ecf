@@ -81,7 +81,6 @@ export function CreateEmploye() {
     const [firstname, setFirstname] = useState('')
     const [role, setRole] = useState('')
     const navigate = useNavigate()
-
     const handleSubmit =  (e) => {
         e.preventDefault()
         try {
@@ -94,7 +93,20 @@ export function CreateEmploye() {
             const userData = {username,password,lastname,firstname,role}
 
             axios.post('http://localhost:3000/api/users/new', userData, config)
+<<<<<<< HEAD
             .then(() => {navigate('/admin/employes')})
+=======
+            .then(() => {
+                const userData = {
+                    email:username,
+                    lastname:lastname,
+                    firstname:firstname,
+                    message:`Nous vous informons de la création de votre espace personnel, votre adresse mail de connexion est : ${username}. Veuillez vous rapprocher de votre administrateur afin d'obtenir le mot de passe.`
+                }
+                axios.post('http://localhost:3000/api/contact/send',userData,config)
+                .then(() => navigate('/admin/employes'))
+            })
+>>>>>>> contact
         } catch(error) {
             console.log(error)
         }
@@ -102,7 +114,7 @@ export function CreateEmploye() {
 
 
     const cancelClick = () => {
-        navigate('/admin/dashboard')
+        navigate('/admin/employes')
     }
 
     return (

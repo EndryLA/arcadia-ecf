@@ -34,6 +34,7 @@ export function GetServices() {
 export function ServiceCrud() {
 
     const [services, setServices] = useState([])
+    const userRole = localStorage.getItem('userRole')
 
     const handleDelete = () => {
         <DeleteService />
@@ -73,8 +74,8 @@ export function ServiceCrud() {
             </tbody>
         </table>
         <div className="buttons-container">
-        <Link to='/admin/services/new' className='button'>Créer Service</Link>
-        <Link to='/admin/dashboard' className='button cancel-button'>Retour</Link>
+        <Link to={`/${userRole}/services/new`} className='button'>Créer Service</Link>
+        <Link to={`/${userRole}/dashboard`} className='button cancel-button'>Retour</Link>
 
         </div>
 
@@ -89,6 +90,8 @@ export function UpdateService() {
     const [description, setDescription] = useState('')
     const {id} = useParams()
     const navigate = useNavigate()
+    const userRole = localStorage.getItem('userRole')
+
 
     console.log(id)
 
@@ -149,20 +152,23 @@ export function CreateService() {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const navigate = useNavigate()
+    const userRole = localStorage.getItem('userRole')
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
         axios.post('http://localhost:3000/api/services/new', {title,description})
         .then((res) => {
             console.log(res)
-        navigate('/dashboard/services')
+            navigate(`/${userRole}/services`)
 
         })
         .catch(error => console.error(error))
     }
 
     const cancelClick = () => {
-        navigate('/admin/services')
+        navigate(`/${userRole}/services`)
+
     }
 
     return (
