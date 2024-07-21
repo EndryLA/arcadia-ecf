@@ -11,7 +11,7 @@ import ServiceCrud, {CreateService, UpdateService} from './services/Service'
 import {EmployesCrud, CreateEmploye, UpdateEmploye} from './services/Employe'
 import {CreateHabitat, HabitatCrud, UpdateHabitat} from './services/Habitat'
 
-import AnimalsCrud, { AnimalVisits, CreateAnimal, UpdateAnimal } from './services/Animal'
+import AnimalsCrud, { CreateAnimal, UpdateAnimal } from './services/Animal'
 
 import './styles.css'
 import CommentsCrud from './services/Comment'
@@ -20,8 +20,6 @@ import HabitatPage from './components/HabitatPage'
 import { CreateFeedingReport, FeedingCrud, GetFeedingReports } from './services/FeedingReport'
 import EmployePage from './components/EmployePage'
 import VeterinaryPage from './components/VeterinaryPage'
-import { AnimalPage } from './components/AnimalPage'
-import UpdateSchedule, { CreateSchedule } from './services/Schedule'
 
 function App () {
   
@@ -38,7 +36,7 @@ function App () {
         <Route path='/services' element={<ServicePage/>}/>
         <Route path='/habitats' element={<HabitatsPage/>}/>
         <Route path='/habitats/:id' element={<HabitatPage/>}/>
-        <Route path='/animals/:id' element={<AnimalPage/>}/>
+        <Route path='/habitats/:id' element={<HabitatPage/>}/>
 
         {/* Admin Routes */ }
 
@@ -60,8 +58,6 @@ function App () {
         <Route path='/admin/animals/' element={<AnimalsCrud />} />
         <Route path='/admin/animals/new' element={<CreateAnimal />} />
         <Route path={`/admin/animals/update/:id`} element={<UpdateAnimal/>} />
-        <Route path={`/admin/animals/visits`} element={<AnimalVisits/>} />
-        <Route path={`/admin/schedule`} element={<UpdateSchedule/>} />
 
         <Route path='/admin/veterinary-reports/' element={<GetVetReports />} />
         </>
@@ -73,12 +69,7 @@ function App () {
         {/* Employe Routes */ }
 
         {userRole === 'employe' ? (
-<<<<<<< HEAD
-        <>
-
-=======
           <>
->>>>>>> contact
         <Route path='employe/dashboard' element={<EmployePage/>}/>
         <Route path={`employe/comments`} element={<CommentsCrud/>} />
         <Route path={'employe/feed'} element={<FeedingCrud/>}/>
@@ -89,19 +80,10 @@ function App () {
 
         ) : <></>}
 
-        </>
-        ) : <>
-
-        </>}
-
         {/*Veterinary Routes*/}
 
         {userRole === 'veterinary' ? (
-<<<<<<< HEAD
-          <>
-=======
         <>
->>>>>>> contact
         <Route path={`/veterinary/dashboard`} element={<VeterinaryPage/>} />
         <Route path={`/veterinary/reports`} element={<GetFeedingReports/>} />
         <Route path={`/veterinary/habitats/comment`} element={<CommentHabitat/>} />
@@ -110,10 +92,6 @@ function App () {
         </>)
         : <></>}
 
-          </>
-        ) : <>
-        
-        </>}
         
 
 

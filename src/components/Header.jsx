@@ -52,25 +52,6 @@ function MobileHeader() {
 }
 
 function DesktopHeader() {
-<<<<<<< HEAD
-    const navigate = useNavigate()
-    const [role,setRole] = (useState(localStorage.getItem('userRole')))
-
-    const logout = () => {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('userRole')
-        navigate('/')
-    };
-
-    const dashboardNavigate = () => {
-        if (role === 'admin') {
-            return '/admin/dashboard';
-        } else if (role === 'employee') {
-            return '/employe/dashboard';
-        } else {
-            return '/veterinary/dashboard';
-        }
-=======
     const userRole = localStorage.getItem('userRole')
 
 
@@ -80,7 +61,6 @@ function DesktopHeader() {
         localStorage.removeItem('userData');
         Navigate('/')
 
->>>>>>> contact
     };
 
     return (
@@ -93,11 +73,7 @@ function DesktopHeader() {
                 <li><Link to="/services">Services</Link></li>
                 <li><Link to="/habitats">Habitats</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
-<<<<<<< HEAD
-                {localStorage.getItem('authToken') && <li><Link to={dashboardNavigate()}>Dashboard</Link></li>}
-=======
                 {localStorage.getItem('authToken') && <li><Link to={`${userRole}/dashboard`}>Dashboard</Link></li>}
->>>>>>> contact
             </ul>
             {localStorage.getItem('authToken') ?
                 <Link to='/' className='button' onClick={logout}>Déconnexion</Link> :
