@@ -5,9 +5,9 @@ import {useNavigate, Link} from 'react-router-dom'
 
 
 export function VetReportCrud() {
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
     const [vetReports, setVetReports] = useState([])
     const [animals,setAnimals] = useState([])
-    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
 
 
     
