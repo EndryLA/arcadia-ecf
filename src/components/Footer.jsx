@@ -4,10 +4,12 @@ import axios from 'axios';
 export function Footer() {
     const daysOfTheWeek = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
     const [schedule, setSchedule] = useState({});
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     const getSchedule = async (day) => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/schedule/${day}`);
+            const response = await axios.get(API_URL_BASE + `/api/schedule/${day}`);
             return response.data.schedule.content;
         } catch (error) {
             console.error(`Erreur lors du fetch de ${day}:`, error);

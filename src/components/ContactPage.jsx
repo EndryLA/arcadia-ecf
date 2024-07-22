@@ -7,11 +7,13 @@ function ContactPage() {
     const [firstname,setFirstname] = useState('')
     const [email,setEmail] = useState('')
     const [message,setMessage] = useState('')
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(firstname, lastname, email, message)
-        axios.post('http://localhost:3000/api/contact/send',{email,lastname,firstname,message})
+        axios.post(API_URL_BASE + '/api/contact/send',{email,lastname,firstname,message})
         .then(response => {
             console.log(response)
             alert('Votre message a bien été envoyé !')
