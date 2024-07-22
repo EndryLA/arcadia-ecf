@@ -6,6 +6,7 @@ export function UpdateSchedule() {
     const daysOfWeek = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
     const [schedules, setSchedules] = useState({})
     const navigate = useNavigate()
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
 
     const token = localStorage.getItem('authToken');
     const config = {
@@ -19,7 +20,7 @@ export function UpdateSchedule() {
             try {
                 const fetchedSchedules = {};
                 for (let day of daysOfWeek) {
-                    const response = await axios.get(`http://localhost:3000/api/schedule/${day}`,);
+                    const response = await axios.get(API_URL_BASE + `/api/schedule/${day}`,);
                     fetchedSchedules[day] = response.data.schedule.content;
                 }
                 setSchedules(fetchedSchedules);
@@ -45,7 +46,7 @@ export function UpdateSchedule() {
         try {
             for (let day of daysOfWeek) {
                 console.log(day, schedules[day])
-                await axios.put(`http://localhost:3000/api/schedule/${day}`, { content: schedules[day] }, config)
+                await axios.put(API_URL_BASE + `/api/schedule/${day}`, { content: schedules[day] }, config)
                 .then(response => console.log(response))
             }
             navigate('/admin/dashboard')
@@ -85,6 +86,8 @@ export function CreateSchedule() {
     const [schedules, setSchedules] = useState(() =>
         daysOfWeek.reduce((acc, day) => ({ ...acc, [day]: '' }), {})
     );
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     const token = localStorage.getItem('authToken');
     const config = {
@@ -105,7 +108,7 @@ export function CreateSchedule() {
         try {
             for (let day of daysOfWeek) {
                 if (schedules[day].trim() !== '') { // Only send non-empty schedules
-                    await axios.post(`http://localhost:3000/api/schedule`, { day, content: schedules[day] }, config);
+                    await axios.post(API_URL_BASE + `/api/schedule`, { day, content: schedules[day] }, config);
                 }
             }
             alert('Schedules created successfully!');

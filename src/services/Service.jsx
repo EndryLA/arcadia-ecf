@@ -11,10 +11,8 @@ export function GetServices() {
     const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
 
     useEffect(() => { 
-        console.log(API_URL_BASE)
         axios.get(API_URL_BASE + '/api/services/')
         .then( response => {
-            console.log(response)
             setServices(response.data)
         })
         .catch (error => console.log(error)) 
@@ -37,16 +35,17 @@ export function ServiceCrud() {
 
     const [services, setServices] = useState([])
     const userRole = localStorage.getItem('userRole')
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     const handleDelete = () => {
         <DeleteService />
     }
 
         useEffect(() => {
-            axios.get('https://arcadia-ecf-backend.vercel.app/api/services')
+            axios.get(API_URL_BASE + '/api/services')
             .then( res => {
                 setServices(res.data)
-                console.log(res.data)
             })
             .catch( error => {
                 console.log(error)
@@ -88,6 +87,8 @@ export function ServiceCrud() {
 
 /* Form that handles Services Updates*/
 export function UpdateService() {
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const {id} = useParams()
@@ -95,12 +96,11 @@ export function UpdateService() {
     const userRole = localStorage.getItem('userRole')
 
 
-    console.log(id)
 
     useEffect(() => {
-        axios.get(`https://arcadia-ecf-backend.vercel.app/api/services/${id}`)
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+        axios.get(API_URL_BASE + `/api/services/${id}`)
         .then(response => {
-            console.log('useEffet : ',response)
             setTitle(response.data.service.title)
             setDescription(response.data.service.description)
         })
@@ -119,9 +119,8 @@ export function UpdateService() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put(`https://arcadia-ecf-backend.vercel.app/api/services/${id}`,{title, description},config)
+        axios.put(API_URL_BASE + `/api/services/${id}`,{title, description},config)
         .then (res => {
-            console.log(res)
             navigate(`/${userRole}/services`)
         })
         .catch (error => {
@@ -153,13 +152,14 @@ export function CreateService() {
     const [description, setDescription] = useState('')
     const navigate = useNavigate()
     const userRole = localStorage.getItem('userRole')
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('https://arcadia-ecf-backend.vercel.app/api/services/new', {title,description})
+        axios.post(API_URL_BASE + '/api/services/new', {title,description})
         .then((res) => {
-            console.log(res)
             navigate(`/${userRole}/services`)
 
         })

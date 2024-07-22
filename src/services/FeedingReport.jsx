@@ -10,10 +10,12 @@ import { UpdateButton,DeleteButton } from '../components/CrudButtons'
 export function FeedingCrud() {
 
     const [animals,setAnimals] = useState([])
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/animals')
+        axios.get(API_URL_BASE + '/api/animals')
         .then(response => setAnimals(response.data))
         .catch(error => console.log(error))
     },[])
@@ -62,6 +64,8 @@ export function CreateFeedingReport() {
     const [animal,setAnimal] = useState('')
     const {id} = useParams()
     const navigate = useNavigate()
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     const token = localStorage.getItem('authToken')
             const config = {
@@ -71,13 +75,13 @@ export function CreateFeedingReport() {
             }
     
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/animals/${id}`,config)
+        axios.get(API_URL_BASE + `/api/animals/${id}`,config)
         .catch(error => console.log(error))
     },[])
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3000/api/feed/new',{animalId:id,date:date,food:food,quantity:quantity},config)
+        axios.post(API_URL_BASE + '/api/feed/new',{animalId:id,date:date,food:food,quantity:quantity},config)
             .then(response => {
                 console.log(response)
                 navigate('/employe/feed')
@@ -106,6 +110,7 @@ export function CreateFeedingReport() {
 }
 
 export function GetFeedingReports() {
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
     const [animals, setAnimals] = useState([]);
     const [feedingReports, setFeedingReports] = useState([]);
     const { id } = useParams();
@@ -135,10 +140,10 @@ export function GetFeedingReports() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const animalResponse = await axios.get('http://localhost:3000/api/animals', config);
+                const animalResponse = await axios.get(API_URL_BASE + '/api/animals', config);
                 setAnimals(animalResponse.data);
                 
-                const feedResponse = await axios.get('http://localhost:3000/api/feed', config);
+                const feedResponse = await axios.get(API_URL_BASE + '/api/feed', config);
                 setFeedingReports(feedResponse.data);
             } catch (error) {
                 console.error('Failed to fetch data:', error);

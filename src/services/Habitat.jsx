@@ -6,9 +6,10 @@ import {Link} from 'react-router-dom'
 
 export function GetHabitats() {
     const [habitats, setHabitats] = useState([]);
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
 
     useEffect(() => { 
-        axios.get('http://localhost:3000/api/habitats/')
+        axios.get(API_URL_BASE + '/api/habitats/')
             .then(response => {
                 setHabitats(response.data);
             })
@@ -24,7 +25,7 @@ export function GetHabitats() {
                 {habitats.map(habitat => (
                     <div key={habitat._id} className='habitat-card'>
                         {/* Adjusted image source URL */}
-                        <img src={`http://localhost:3000/api/images/download/${habitat.image}`} alt={habitat.name} />
+                        <img src={API_URL_BASE + `/api/images/download/${habitat.image}`} alt={habitat.name} />
                         <h3>{habitat.name}</h3>
                         <Link to={`/habitats/${habitat._id}`} className='button'>Visiter</Link>
                     </div>
@@ -37,13 +38,15 @@ export function GetHabitats() {
 export function HabitatCrud() {
 
     const [habitats, sethabitats] = useState([])
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     const handleDelete = () => {
         <DeleteService />
     }
 
         useEffect(() => {
-            axios.get('http://localhost:3000/api/habitats')
+            axios.get(API_URL_BASE + '/api/habitats')
             .then( res => {
                 sethabitats(res.data)
                 console.log(res.data)
@@ -72,7 +75,7 @@ export function HabitatCrud() {
                         <td>{habitat.name}</td>
                         <td>{habitat.commentaire}</td>
                         <td>{habitat.description}</td>
-                        <td><img src={`http://localhost:3000/api/images/download/${habitat.image}`}/></td>
+                        <td><img src={API_URL_BASE + `/api/images/download/${habitat.image}`}/></td>
                         <td>{<UpdateButton entity='habitats' id={habitat._id} user='admin' content='modifier' />}</td>
                         <td>{<DeleteButton entity='habitats' id={habitat._id}/>}</td>
                     </tr>
@@ -95,6 +98,8 @@ export function CreateHabitat() {
     const [commentaire, setCommentaire] = useState('')
     const [image, setImage] = useState(null)
     const navigate = useNavigate()
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     const config = {headers: {'Content-Type': 'multipart/form-data'}}
 
@@ -106,12 +111,12 @@ export function CreateHabitat() {
             const formData = new FormData();
             formData.append('image', image);
     
-            const uploadResponse = await axios.post('http://localhost:3000/api/upload', formData, config);
+            const uploadResponse = await axios.post(API_URL_BASE + '/api/upload', formData, config);
             const uploadedFilename = uploadResponse.data.Image.filename;
     
             const habitatData = { name, description, commentaire, image: uploadedFilename };
     
-            await axios.post('http://localhost:3000/api/habitats/new', habitatData);
+            await axios.post(API_URL_BASE + '/api/habitats/new', habitatData);
     
             navigate('/dashboard');
         } catch (error) {
@@ -162,8 +167,10 @@ export function UpdateHabitat() {
     const navigate = useNavigate()
     const {id} = useParams()
     const userRole=localStorage.getItem('userRole')
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/habitats/${id}`)
+        axios.get(API_URL_BASE + `/api/habitats/${id}`)
         .then(response => {
             console.log('useEffet : ',response)
             setName(response.data.name)
@@ -179,7 +186,7 @@ export function UpdateHabitat() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put(`http://localhost:3000/api/habitats/${id}`,{name,commentaire, image, description})
+        axios.put(API_URL_BASE + `/api/habitats/${id}`,{name,commentaire, image, description})
         .then (res => {
             console.log(res)
             navigate('/dashboard')

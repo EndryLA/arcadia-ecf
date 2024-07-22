@@ -42,7 +42,7 @@ export default function HabitatPage() {
                         <h3>{animal.name}</h3>
                         <p>{animal.race}</p>
                     </div>
-                    <Link to={`/animal/${animal._id}`}  className='button'>Visiter</Link>
+                    <Link to={`/animals/${animal._id}`}  className='button'>Visiter</Link>
                 </div>
                 ))}
             </div>
