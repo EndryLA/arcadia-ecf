@@ -76,12 +76,12 @@ function App () {
 
         {userRole === 'employe' ? (
           <>
-        <Route path='employe/dashboard' element={<EmployePage/>}/>
-        <Route path={`employe/comments`} element={<CommentsCrud/>} />
-        <Route path={'employe/feed'} element={<FeedingCrud/>}/>
-        <Route path={'employe/services'} element={<ServiceCrud/>}/>
-        <Route path={'employe/services/new'} element={<CreateService/>}/>
-        <Route path={'employe/feed/update/:id'} element={<CreateFeedingReport/>}/>
+        <Route path='/employe/dashboard' element={<EmployePage/>}/>
+        <Route path={`/employe/comments`} element={<CommentsCrud/>} />
+        <Route path={'/employe/feed'} element={<FeedingCrud/>}/>
+        <Route path={'/employe/services'} element={<ServiceCrud/>}/>
+        <Route path={'/employe/services/new'} element={<CreateService/>}/>
+        <Route path={'/employe/feed/update/:id'} element={<CreateFeedingReport/>}/>
         </>
 
         ) : <></>}
