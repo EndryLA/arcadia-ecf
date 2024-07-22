@@ -7,10 +7,12 @@ import { Link, useNavigate } from "react-router-dom";
 function MobileHeader() {
     const [isActive, setIsActive] = useState(false);
     const userRole = localStorage.getItem('userRole')
+    const navigate = useNavigate()
 
 
     const handleClick = () => {
         setIsActive(!isActive); // Toggle isActive state
+        navigate('/')
     };
 
     const logout = () => {

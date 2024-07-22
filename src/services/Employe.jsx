@@ -85,7 +85,7 @@ export function CreateEmploye() {
     const [firstname, setFirstname] = useState('')
     const [role, setRole] = useState('')
     const navigate = useNavigate()
-    
+
     const handleSubmit =  (e) => {
         const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
         e.preventDefault()
@@ -185,11 +185,7 @@ export function UpdateEmploye() {
    
     const handleSubmit = (e) => {
         e.preventDefault()
-
-
-        console.log(password)
-
-
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
 
         axios.put(API_URL_BASE + `/api/users/${id}`,{username, firstname,lastname, role},config)
         .then (res => {
