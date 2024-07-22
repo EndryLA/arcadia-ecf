@@ -33,7 +33,7 @@ function App () {
     <>
     <Router>
     <Header />
-      <Routes>
+      <Switch>
         <Route path='/' element={<HomePage />}/>
         <Route path='/connexion' element={<LoginPage/>}/>
         <Route path='/contact' element={<ContactPage/>}/>
@@ -114,7 +114,7 @@ function App () {
 
 
 
-      </Routes>
+      </Switch>
     <Footer />
     </Router>
     </>
