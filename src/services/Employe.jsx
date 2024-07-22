@@ -93,9 +93,6 @@ export function CreateEmploye() {
             const userData = {username,password,lastname,firstname,role}
 
             axios.post('http://localhost:3000/api/users/new', userData, config)
-<<<<<<< HEAD
-            .then(() => {navigate('/admin/employes')})
-=======
             .then(() => {
                 const userData = {
                     email:username,
@@ -106,7 +103,6 @@ export function CreateEmploye() {
                 axios.post('http://localhost:3000/api/contact/send',userData,config)
                 .then(() => navigate('/admin/employes'))
             })
->>>>>>> contact
         } catch(error) {
             console.log(error)
         }

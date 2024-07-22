@@ -6,7 +6,6 @@ import ServiceCard from '../components/ServiceCard'
 import {Link} from 'react-router-dom'
 
 
-/* Displays all the services in the service page */
 export function GetServices() {
     const [services,setServices] = useState([])
 
@@ -113,7 +112,6 @@ export function UpdateService() {
             authorization:`Bearer ${token}`,
         }
     }
-    const userRole = localStorage.getItem('userRole')
 
 
     const handleSubmit = (e) => {
@@ -147,7 +145,6 @@ export function UpdateService() {
         
 }
 
-/* Form that handles creation of services*/ 
 export function CreateService() {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')

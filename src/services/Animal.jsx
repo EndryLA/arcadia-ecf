@@ -75,7 +75,6 @@ export function CreateAnimal() {
     const config = {
         headers: {
             authorization:`Bearer ${token}`,
-            "Content-Type":'multipart/form-data'
         }
     }
 
@@ -99,7 +98,7 @@ export function CreateAnimal() {
     
             const animalData = { name, habitatId, state, race, image: uploadedFilename };
     
-            await axios.post('http://localhost:3000/api/animals/new', animalData)
+            await axios.post('http://localhost:3000/api/animals/new', animalData, config)
             .then(() => navigate('/admin/animals'))
             
         } catch (error) {
@@ -112,7 +111,7 @@ export function CreateAnimal() {
     }
 
     return (
-        <form onSubmit={handleSubmit} method='post' encType='multipart/data-form'>
+        <form onSubmit={handleSubmit} method='post' encType='multipart/form-data'>
             <div>
                 <label htmlFor='habitatId'>Habitat</label>
                 <select onChange={e => setHabitatId(e.target.value)} name='habitatId' value={habitatId}>

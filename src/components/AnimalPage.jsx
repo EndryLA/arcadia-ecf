@@ -67,3 +67,5 @@ export function AnimalPage() {
         
     )
 }
+
+export default AnimalPage

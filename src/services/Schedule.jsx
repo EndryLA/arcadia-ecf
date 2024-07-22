@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function UpdateSchedule() {
     const daysOfWeek = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
     const [schedules, setSchedules] = useState({})
+    const navigate = useNavigate()
 
     const token = localStorage.getItem('authToken');
     const config = {
@@ -47,7 +48,7 @@ export function UpdateSchedule() {
                 await axios.put(`http://localhost:3000/api/schedule/${day}`, { content: schedules[day] }, config)
                 .then(response => console.log(response))
             }
-            alert('Schedules updated successfully!');
+            navigate('/admin/dashboard')
         } catch (error) {
             console.error('Error updating schedules:', error);
             alert('Error updating schedules. Please try again later.');

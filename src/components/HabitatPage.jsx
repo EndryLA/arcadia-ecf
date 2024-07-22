@@ -1,9 +1,5 @@
 import axios from 'axios'
-<<<<<<< HEAD
-import {useParams, Link} from 'react-router-dom'
-=======
 import {useParams,Link} from 'react-router-dom'
->>>>>>> contact
 import {useState, useEffect} from 'react'
 
 
@@ -46,11 +42,7 @@ export default function HabitatPage() {
                         <h3>{animal.name}</h3>
                         <p>{animal.race}</p>
                     </div>
-<<<<<<< HEAD
-                    <Link to={`/animals/${animal._id}`} className='button'>Visiter</Link>
-=======
-                    <Link to={`/animals/${animal._id}`}  className='button'>Visiter</Link>
->>>>>>> contact
+                    <Link to={`/animal/${animal._id}`}  className='button'>Visiter</Link>
                 </div>
                 ))}
             </div>
