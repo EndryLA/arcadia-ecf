@@ -8,9 +8,11 @@ import {Link} from 'react-router-dom'
 
 export function GetServices() {
     const [services,setServices] = useState([])
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
 
     useEffect(() => { 
-        axios.get('http://localhost:3000/api/services/')
+        console.log(API_URL_BASE)
+        axios.get(API_URL_BASE + '/api/services/')
         .then( response => {
             console.log(response)
             setServices(response.data)
@@ -31,6 +33,7 @@ export function GetServices() {
 
 /* Displays the CRUD table for services dashboard*/
 export function ServiceCrud() {
+    
 
     const [services, setServices] = useState([])
     const userRole = localStorage.getItem('userRole')
@@ -40,7 +43,7 @@ export function ServiceCrud() {
     }
 
         useEffect(() => {
-            axios.get('http://localhost:3000/api/services')
+            axios.get('https://arcadia-ecf-backend.vercel.app/api/services')
             .then( res => {
                 setServices(res.data)
                 console.log(res.data)
@@ -95,7 +98,7 @@ export function UpdateService() {
     console.log(id)
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/services/${id}`)
+        axios.get(`https://arcadia-ecf-backend.vercel.app/api/services/${id}`)
         .then(response => {
             console.log('useEffet : ',response)
             setTitle(response.data.service.title)
@@ -116,7 +119,7 @@ export function UpdateService() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put(`http://localhost:3000/api/services/${id}`,{title, description},config)
+        axios.put(`https://arcadia-ecf-backend.vercel.app/api/services/${id}`,{title, description},config)
         .then (res => {
             console.log(res)
             navigate(`/${userRole}/services`)
@@ -154,7 +157,7 @@ export function CreateService() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3000/api/services/new', {title,description})
+        axios.post('https://arcadia-ecf-backend.vercel.app/api/services/new', {title,description})
         .then((res) => {
             console.log(res)
             navigate(`/${userRole}/services`)
