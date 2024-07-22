@@ -43,6 +43,8 @@ export function UpdateButton({entity,id,user,content}) {
 export function ToggleButton({ id, isValid }) {
     const [active, setActive] = useState(isValid);
     const token = localStorage.getItem('authToken')
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
     const config = {
         headers: {
             authorization:`Bearer ${token}`

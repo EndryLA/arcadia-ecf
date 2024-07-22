@@ -26,13 +26,15 @@ import UpdateSchedule from './services/Schedule'
 function App () {
   
   const userRole = localStorage.getItem('userRole')
+  const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+  
 
   return (
     <>
     <Router>
     <Header />
       <Routes>
-        <Route path='/' element={<HomePage/>}/>
+        <Route path='/' element={<HomePage />}/>
         <Route path='/connexion' element={<LoginPage/>}/>
         <Route path='/contact' element={<ContactPage/>}/>
         <Route path='/services' element={<ServicePage/>}/>

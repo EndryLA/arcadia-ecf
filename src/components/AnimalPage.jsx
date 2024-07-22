@@ -8,12 +8,16 @@ export function AnimalPage() {
     const [vetReport, setVetReport] = useState([])
     const [vetReports, setVetReports] = useState([]);
     const {id} = useParams()
-
+    
+    
     const userRole = localStorage.getItem('oui')
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
 
-
+    
+    
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/animals/${id}`)
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+        axios.get(API_URL_BASE + `/api/animals/${id}`)
         .then(response => {
             setAnimal(response.data)
         })
@@ -24,15 +28,17 @@ export function AnimalPage() {
     },[])
 
     useEffect(() => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
         if (userRole !== 'admin' || 'veterinary' || 'employe') {
-            axios.post(`http://localhost:3000/api/animals/visit/${id}`)
+            axios.post(API_URL_BASE + `/api/animals/visit/${id}`)
             .then(response => console.log(response.data))
             .catch(error => console.log(error))
         }
     },[])
 
     useEffect(()=>  {
-        axios.get(`http://localhost:3000/api/veterinary`)
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+        axios.get(API_URL_BASE + `/api/veterinary`)
 
         .then(response => {
             setVetReports(response.data)
@@ -51,7 +57,7 @@ export function AnimalPage() {
             </div>
 
             <div className='content'>
-                <img src={`http://localhost:3000/api/images/download/${animal.image}`} alt={animal.name}/>
+                <img src={API_URL_BASE + `/api/images/download/${animal.image}`} alt={animal.name}/>
                 <div className='animal-info'>
                     <div className='health-state'>
                         <img className='state-logo' src={animalState} />
