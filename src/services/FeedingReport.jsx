@@ -15,6 +15,8 @@ export function FeedingCrud() {
 
 
     useEffect(() => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         axios.get(API_URL_BASE + '/api/animals')
         .then(response => setAnimals(response.data))
         .catch(error => console.log(error))
@@ -75,11 +77,15 @@ export function CreateFeedingReport() {
             }
     
     useEffect(() => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         axios.get(API_URL_BASE + `/api/animals/${id}`,config)
         .catch(error => console.log(error))
     },[])
 
     const handleSubmit = (e) => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         e.preventDefault()
         axios.post(API_URL_BASE + '/api/feed/new',{animalId:id,date:date,food:food,quantity:quantity},config)
             .then(response => {
@@ -138,6 +144,8 @@ export function GetFeedingReports() {
     }
 
     useEffect(() => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         const fetchData = async () => {
             try {
                 const animalResponse = await axios.get(API_URL_BASE + '/api/animals', config);

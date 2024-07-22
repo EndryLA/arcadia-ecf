@@ -44,6 +44,8 @@ export function ServiceCrud() {
     }
 
         useEffect(() => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
             axios.get(API_URL_BASE + '/api/services')
             .then( res => {
                 setServices(res.data)
@@ -119,6 +121,8 @@ export function UpdateService() {
 
 
     const handleSubmit = (e) => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         e.preventDefault()
         axios.put(API_URL_BASE + `/api/services/${id}`,{title, description},config)
         .then (res => {

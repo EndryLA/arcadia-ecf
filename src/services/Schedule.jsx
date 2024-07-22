@@ -16,6 +16,8 @@ export function UpdateSchedule() {
     };
 
     useEffect(() => {
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         const fetchSchedules = async () => {
             try {
                 const fetchedSchedules = {};
@@ -97,6 +99,7 @@ export function CreateSchedule() {
     };
 
     const handleChange = (day, content) => {
+        
         setSchedules((prevSchedules) => ({
             ...prevSchedules,
             [day]: content,
@@ -104,6 +107,8 @@ export function CreateSchedule() {
     };
 
     const handleSubmit = async (e) => {
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         e.preventDefault();
         try {
             for (let day of daysOfWeek) {

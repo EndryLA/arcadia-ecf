@@ -10,6 +10,8 @@ export function CommentsCrud(){
 
 
     useEffect(() => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         axios.get(API_URL_BASE + '/api/comments')
         .then((response) => {
           setComments(response.data)
@@ -51,6 +53,7 @@ export function GetComments(){
 
 
     useEffect( () => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
         axios.get(API_URL_BASE + '/api/comments')
         .then(response => setComments(response.data))
         .catch(error => console.log(error))

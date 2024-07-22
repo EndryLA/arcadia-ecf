@@ -8,6 +8,8 @@ export function Footer() {
 
 
     const getSchedule = async (day) => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         try {
             const response = await axios.get(API_URL_BASE + `/api/schedule/${day}`);
             return response.data.schedule.content;
@@ -18,6 +20,8 @@ export function Footer() {
     };
 
     useEffect(() => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+        
         const fetchSchedules = async () => {
             const fetchedSchedules = {};
             for (const day of daysOfTheWeek) {

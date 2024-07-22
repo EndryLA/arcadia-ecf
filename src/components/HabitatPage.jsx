@@ -13,6 +13,8 @@ export default function HabitatPage() {
 
 
     useEffect(() => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         axios.get(API_URL_BASE + `/api/habitats/${id}`)
         .then(response => {
             console.log(response)

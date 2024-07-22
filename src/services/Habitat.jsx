@@ -9,6 +9,8 @@ export function GetHabitats() {
     const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
 
     useEffect(() => { 
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         axios.get(API_URL_BASE + '/api/habitats/')
             .then(response => {
                 setHabitats(response.data);
@@ -46,6 +48,8 @@ export function HabitatCrud() {
     }
 
         useEffect(() => {
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
             axios.get(API_URL_BASE + '/api/habitats')
             .then( res => {
                 sethabitats(res.data)
