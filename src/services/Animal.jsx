@@ -7,8 +7,13 @@ import {Link} from 'react-router-dom'
 export function AnimalsCrud() {
 
     const [animals, setAnimals] = useState([])
+    const [habitats,setHabitats] = useState([])
     const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
 
+    const getHabitatName = (animalId) => {
+        const habitat = habitats.find(a => a._id === animalId);
+        return habitat ? habitat.name : 'Nom non renseigné';
+    };
 
     const handleDelete = () => {
         <DeleteService />
@@ -20,6 +25,13 @@ export function AnimalsCrud() {
             axios.get(API_URL_BASE + '/api/animals')
             .then( res => {
                 setAnimals(res.data)
+            })
+            .catch( error => {
+                console.log(error)
+            })
+            axios.get(API_URL_BASE + '/api/habitats')
+            .then( res => {
+                setHabitats(res.data)
             })
             .catch( error => {
                 console.log(error)
@@ -43,7 +55,7 @@ export function AnimalsCrud() {
                 {/* Map over habitats and return table rows */}
                 {animals.map(animal => (
                     <tr key={animal._id}>
-                        <td>{animal.habitatId}</td>
+                        <td>{getHabitatName(animal.habitatId)}</td>
                         <td>{animal.race}</td>
                         <td>{animal.name}</td>
                         <td>{animal.state}</td>
@@ -105,7 +117,7 @@ export function CreateAnimal() {
             const uploadResponse = await axios.post(API_URL_BASE + '/api/upload', formData, config);
             const uploadedFilename = uploadResponse.data.Image.filename;
     
-            const animalData = { name, habitatId, state, race, image: uploadedFilename };
+            const animalData = { name, habitatId, state, race, image: uploadedFilename,visits:'0'};
     
             await axios.post(API_URL_BASE + '/api/animals/new', animalData, config)
             .then(() => navigate('/admin/animals'))

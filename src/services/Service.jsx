@@ -158,12 +158,18 @@ export function CreateService() {
     const navigate = useNavigate()
     const userRole = localStorage.getItem('userRole')
     
+    const token = localStorage.getItem('authToken')
+    const config = {
+        headers: {
+            authorization:`Bearer ${token}`,
+        }
+    }
     
     
     const handleSubmit = (e) => {
         e.preventDefault()
         const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
-        axios.post(API_URL_BASE + '/api/services/new', {title,description})
+        axios.post('http://localhost:3000/api/services/new', {title,description},config)
         .then((res) => {
             navigate(`/${userRole}/services`)
 

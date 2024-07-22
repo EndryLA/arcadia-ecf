@@ -105,10 +105,18 @@ export function CreateHabitat() {
     const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
 
 
-    const config = {headers: {'Content-Type': 'multipart/form-data'}}
+    const token = localStorage.getItem('authToken')
+    const config = {
+        headers: {
+            authorization:`Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
+        }
+    }
 
 
     const handleSubmit = async (e) => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         e.preventDefault();
     
         try {
@@ -120,7 +128,7 @@ export function CreateHabitat() {
     
             const habitatData = { name, description, commentaire, image: uploadedFilename };
     
-            await axios.post(API_URL_BASE + '/api/habitats/new', habitatData);
+            await axios.post(API_URL_BASE + '/api/habitats/new', habitatData,config);
     
             navigate('/dashboard');
         } catch (error) {
@@ -173,6 +181,14 @@ export function UpdateHabitat() {
     const userRole=localStorage.getItem('userRole')
     const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
 
+    const token = localStorage.getItem('authToken')
+    const config = {
+        headers: {
+            authorization:`Bearer ${token}`,
+        }
+    }
+    
+
     useEffect(() => {
         axios.get(API_URL_BASE + `/api/habitats/${id}`)
         .then(response => {
@@ -190,7 +206,7 @@ export function UpdateHabitat() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put(API_URL_BASE + `/api/habitats/${id}`,{name,commentaire, image, description})
+        axios.put(API_URL_BASE + `/api/habitats/${id}`,{name,commentaire, image, description},config)
         .then (res => {
             console.log(res)
             navigate('/dashboard')
