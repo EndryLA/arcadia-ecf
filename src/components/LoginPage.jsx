@@ -9,11 +9,13 @@ function LoginPage() {
     const [error, setError] = useState('')
     const [token,setToken] = useState(null)
     const navigate = useNavigate()
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const response = await axios.post('http://localhost:3000/api/users/auth',{username,password})
+            const response = await axios.post(API_URL_BASE + '/api/users/auth',{username,password})
             
             if(response) {
             const {firstname, lastname, userId, role} = response.data

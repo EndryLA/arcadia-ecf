@@ -7,6 +7,8 @@ export function DeleteButton({entity,id}) {
     const [open, setOpen] = useState(false)
     const token = localStorage.getItem('authToken')
     const config = {headers: {authorization:`Bearer ${token}`}}
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+    
 
     const handleConfirm = () => {
         setOpen(true)
@@ -15,7 +17,7 @@ export function DeleteButton({entity,id}) {
         setOpen(false)
     }
     const handleClick = () => {
-        axios.delete(`http://localhost:3000/api/${entity}/${id}`,config)
+        axios.delete(API_URL_BASE + `/api/${entity}/${id}`,config)
         .then(() => {
             console.log(`deleted ${entity} with id of ${id}`)
             window.location.reload()
@@ -51,7 +53,7 @@ export function ToggleButton({ id, isValid }) {
     }
 
     useEffect(() => {
-        axios.put(`http://localhost:3000/api/comments/${id}`,{isValid: active},config)
+        axios.put(API_URL_BASE + `/api/comments/${id}`,{isValid: active},config)
         .then(response => console.log(response))
         .catch(error => console.log(error))
     },[active])

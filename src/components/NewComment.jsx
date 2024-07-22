@@ -4,12 +4,14 @@ import axios from 'axios';
 function NewComment() {
     const [pseudo, setPseudo] = useState('');
     const [comment, setComment] = useState('');
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:3000/api/comments/new', {
+            const response = await axios.post(API_URL_BASE + '/api/comments/new', {
                 pseudo: pseudo,
                 comment: comment,
                 isValid:false

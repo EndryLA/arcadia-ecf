@@ -44,7 +44,7 @@ function MobileHeader() {
                     </ul>
                     {localStorage.getItem('authToken') ?
                         <Link to='/' className='button' onClick={logout}>Déconnexion</Link> :
-                        <Link to='/connexion' className='button'>Se connecter</Link>}
+                        <Link to='/connexion' className='button' onClick={handleClick}>Se connecter</Link>}
                 </nav>
             )}
         </header>
