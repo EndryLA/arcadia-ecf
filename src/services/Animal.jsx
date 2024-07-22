@@ -15,6 +15,8 @@ export function AnimalsCrud() {
     }
 
         useEffect(() => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
             axios.get(API_URL_BASE + '/api/animals')
             .then( res => {
                 setAnimals(res.data)
@@ -82,6 +84,8 @@ export function CreateAnimal() {
     }
 
     useEffect(  () => {
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         async function  fetchData() {
             const response = await axios.get(API_URL_BASE + '/api/habitats')
             setHabitats(response.data)
@@ -91,6 +95,8 @@ export function CreateAnimal() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+        
     
         try {
             const formData = new FormData();
@@ -160,6 +166,8 @@ export function UpdateAnimal() {
     const { id } = useParams();
 
     useEffect(() => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         const fetchAnimal = async () => {
             try {
                 const response = await axios.get(API_URL_BASE + `/api/animals/${id}`);
@@ -173,7 +181,9 @@ export function UpdateAnimal() {
             }
         };
 
-        const fetchHabitats = async () => {
+        const fetchHabitats = async () => { 
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+            
             try {
                 const response = await axios.get(API_URL_BASE + '/api/habitats');
                 setHabitats(response.data);
@@ -196,6 +206,7 @@ export function UpdateAnimal() {
 
     const handleSubmit2 = async (e) => {
         e.preventDefault();
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
 
         try {
             let uploadedFilename = image;
@@ -276,6 +287,8 @@ export function AnimalVisits() {
     const [sortOrder, setSortOrder] = useState('decroissant');
 
         useEffect(() => {
+            const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
             axios.get(API_URL_BASE + '/api/animals')
             .then( res => {
                 setAnimals(res.data)

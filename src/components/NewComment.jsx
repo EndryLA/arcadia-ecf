@@ -8,6 +8,8 @@ function NewComment() {
 
 
     const handleSubmit = async (e) => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         e.preventDefault();
 
         try {

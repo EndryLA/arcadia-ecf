@@ -55,6 +55,8 @@ export function ToggleButton({ id, isValid }) {
     }
 
     useEffect(() => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
         axios.put(API_URL_BASE + `/api/comments/${id}`,{isValid: active},config)
         .then(response => console.log(response))
         .catch(error => console.log(error))

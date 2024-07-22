@@ -13,6 +13,7 @@ function LoginPage() {
 
 
     const handleSubmit = async (e) => {
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
         e.preventDefault()
         try {
             const response = await axios.post(API_URL_BASE + '/api/users/auth',{username,password})

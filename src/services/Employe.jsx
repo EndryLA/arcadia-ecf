@@ -17,6 +17,7 @@ export function EmployesCrud() {
     
 
     useEffect(() => {
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
     const userRole = localStorage.getItem('userRole')
     const token = localStorage.getItem('authToken')
     const config = {
@@ -84,7 +85,9 @@ export function CreateEmploye() {
     const [firstname, setFirstname] = useState('')
     const [role, setRole] = useState('')
     const navigate = useNavigate()
+    
     const handleSubmit =  (e) => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
         e.preventDefault()
         try {
             const token = localStorage.getItem('authToken')
