@@ -6,9 +6,11 @@ import {Link} from 'react-router-dom'
 
 export function CommentsCrud(){
     const [comments,setComments] = useState([])
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/comments')
+        axios.get(API_URL_BASE + '/api/comments')
         .then((response) => {
           setComments(response.data)
         })
@@ -45,9 +47,11 @@ export function CommentsCrud(){
 
 export function GetComments(){
     const [comments, setComments] = useState([])
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     useEffect( () => {
-        axios.get('http://localhost:3000/api/comments')
+        axios.get(API_URL_BASE + '/api/comments')
         .then(response => setComments(response.data))
         .catch(error => console.log(error))
     },[])

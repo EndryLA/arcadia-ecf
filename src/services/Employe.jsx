@@ -7,6 +7,8 @@ export function EmployesCrud() {
 
     const [employes, setEmploye] = useState([])
     const navigate = useNavigate()
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     const handleDelete = () => {
         <DeleteService />
@@ -24,7 +26,7 @@ export function EmployesCrud() {
     }
     if (userRole === 'admin') {
 
-        axios.get('http://localhost:3000/api/users/',config)
+        axios.get(API_URL_BASE + '/api/users/',config)
         .then( res => {
             setEmploye(res.data)
         })
@@ -75,6 +77,7 @@ export function EmployesCrud() {
 }
 
 export function CreateEmploye() {
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [lastname, setLastname] = useState('')
@@ -92,7 +95,7 @@ export function CreateEmploye() {
             }
             const userData = {username,password,lastname,firstname,role}
 
-            axios.post('http://localhost:3000/api/users/new', userData, config)
+            axios.post(API_URL_BASE + '/api/users/new', userData, config)
             .then(() => {
                 const userData = {
                     email:username,
@@ -100,7 +103,7 @@ export function CreateEmploye() {
                     firstname:firstname,
                     message:`Nous vous informons de la création de votre espace personnel, votre adresse mail de connexion est : ${username}. Veuillez vous rapprocher de votre administrateur afin d'obtenir le mot de passe.`
                 }
-                axios.post('http://localhost:3000/api/contact/send',userData,config)
+                axios.post(API_URL_BASE + '/api/contact/send',userData,config)
                 .then(() => navigate('/admin/employes'))
             })
         } catch(error) {
@@ -148,6 +151,7 @@ export function CreateEmploye() {
 }
 
 export function UpdateEmploye() {
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [lastname, setLastname] = useState('')
@@ -160,7 +164,7 @@ export function UpdateEmploye() {
     const [formData,setFormData] = ('')
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/users/${id}`,config)
+        axios.get(API_URL_BASE + `/api/users/${id}`,config)
         .then(response => {
             console.log('useEffet : ',response)
             setUsername(response.data.username)
@@ -184,7 +188,7 @@ export function UpdateEmploye() {
 
 
 
-        axios.put(`http://localhost:3000/api/users/${id}`,{username, firstname,lastname, role},config)
+        axios.put(API_URL_BASE + `/api/users/${id}`,{username, firstname,lastname, role},config)
         .then (res => {
             console.log(res)
             navigate('/admin/employes')

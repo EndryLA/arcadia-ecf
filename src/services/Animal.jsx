@@ -7,13 +7,15 @@ import {Link} from 'react-router-dom'
 export function AnimalsCrud() {
 
     const [animals, setAnimals] = useState([])
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     const handleDelete = () => {
         <DeleteService />
     }
 
         useEffect(() => {
-            axios.get('http://localhost:3000/api/animals')
+            axios.get(API_URL_BASE + '/api/animals')
             .then( res => {
                 setAnimals(res.data)
             })
@@ -43,7 +45,7 @@ export function AnimalsCrud() {
                         <td>{animal.race}</td>
                         <td>{animal.name}</td>
                         <td>{animal.state}</td>
-                        <td><img src={`http://localhost:3000/api/images/download/${animal.image}`}/></td>
+                        <td><img src={API_URL_BASE + `/api/images/download/${animal.image}`}/></td>
                         <td>{<UpdateButton entity='animals' id={animal._id} content='modifier' user='admin'/>}</td>
                         <td>{<DeleteButton entity='animals' id={animal._id}/>}</td>
                     </tr>
@@ -63,6 +65,7 @@ export function AnimalsCrud() {
 }
 
 export function CreateAnimal() {
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
     const [habitatId, setHabitatId] = useState('')
     const [race, setRace] = useState('')
     const [name, setName] = useState('')
@@ -80,7 +83,7 @@ export function CreateAnimal() {
 
     useEffect(  () => {
         async function  fetchData() {
-            const response = await axios.get('http://localhost:3000/api/habitats')
+            const response = await axios.get(API_URL_BASE + '/api/habitats')
             setHabitats(response.data)
         }
         fetchData()
@@ -93,12 +96,12 @@ export function CreateAnimal() {
             const formData = new FormData();
             formData.append('image', image);
     
-            const uploadResponse = await axios.post('http://localhost:3000/api/upload', formData, config);
+            const uploadResponse = await axios.post(API_URL_BASE + '/api/upload', formData, config);
             const uploadedFilename = uploadResponse.data.Image.filename;
     
             const animalData = { name, habitatId, state, race, image: uploadedFilename };
     
-            await axios.post('http://localhost:3000/api/animals/new', animalData, config)
+            await axios.post(API_URL_BASE + '/api/animals/new', animalData, config)
             .then(() => navigate('/admin/animals'))
             
         } catch (error) {
@@ -146,6 +149,7 @@ export function CreateAnimal() {
 }
 
 export function UpdateAnimal() {
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
     const [habitatId, setHabitatId] = useState('');
     const [name, setName] = useState('');
     const [race, setRace] = useState('');
@@ -158,7 +162,7 @@ export function UpdateAnimal() {
     useEffect(() => {
         const fetchAnimal = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/animals/${id}`);
+                const response = await axios.get(API_URL_BASE + `/api/animals/${id}`);
                 setHabitatId(response.data.habitatId);
                 setName(response.data.name);
                 setImage(response.data.image);
@@ -171,7 +175,7 @@ export function UpdateAnimal() {
 
         const fetchHabitats = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/habitats');
+                const response = await axios.get(API_URL_BASE + '/api/habitats');
                 setHabitats(response.data);
             } catch (error) {
                 console.error(error);
@@ -207,13 +211,13 @@ export function UpdateAnimal() {
                     }
                 };
 
-                const uploadResponse = await axios.post('http://localhost:3000/api/upload', formData, uploadConfig);
+                const uploadResponse = await axios.post(API_URL_BASE + '/api/upload', formData, uploadConfig);
                 uploadedFilename = uploadResponse.data.filename; 
             }
 
             const animalData = { name, habitatId, state, race, image: uploadedFilename };
 
-            const response = await axios.put(`http://localhost:3000/api/animals/${id}`, animalData, config);
+            const response = await axios.put(API_URL_BASE + `/api/animals/${id}`, animalData, config);
             console.log(response);
         } catch (error) {
             console.error('Error:', error);
@@ -267,11 +271,12 @@ export function UpdateAnimal() {
     );
 }
 export function AnimalVisits() {
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
     const [animals, setAnimals] = useState([])
     const [sortOrder, setSortOrder] = useState('decroissant');
 
         useEffect(() => {
-            axios.get('http://localhost:3000/api/animals')
+            axios.get(API_URL_BASE + '/api/animals')
             .then( res => {
                 setAnimals(res.data)
             })
@@ -321,7 +326,7 @@ export function AnimalVisits() {
                         <td>{animal.name}</td>
                         <td>{animal.race}</td>
                         <td>{animal.visits}</td>
-                        <td><img src={`http://localhost:3000/api/images/download/${animal.image}`}/></td>
+                        <td><img src={API_URL_BASE + `/api/images/download/${animal.image}`}/></td>
                     </tr>
                 ))}
             </tbody>

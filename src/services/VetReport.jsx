@@ -5,8 +5,10 @@ import {useNavigate, Link} from 'react-router-dom'
 
 
 export function VetReportCrud() {
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
     const [vetReports, setVetReports] = useState([])
     const [animals,setAnimals] = useState([])
+
 
     
 
@@ -30,12 +32,12 @@ export function VetReportCrud() {
 
     useEffect(() => {
 
-        axios.get('http://localhost:3000/api/animals',config)
+        axios.get(API_URL_BASE + '/api/animals',config)
         .then(response => {setAnimals(response.data)})
         .catch(error => console.log(error))
 
 
-        axios.get('http://localhost:3000/api/veterinary',config)
+        axios.get(API_URL_BASE + '/api/veterinary',config)
         .then(response => setVetReports(response.data))
         .catch(response => console.log(response.data)) 
     },[])
@@ -79,6 +81,8 @@ export function CreateVetReport() {
     const [authorId, setAuthorId] = useState('66965737a4dbf1ca7614d8fd')
     const [animalId, setAnimalId] = useState('')
     const navigate = useNavigate()
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     const token = localStorage.getItem('authToken')
     const config = {
@@ -93,7 +97,7 @@ export function CreateVetReport() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3000/api/veterinary/new',{date,detail, animalId, authorId},config)
+        axios.post(API_URL_BASE + '/api/veterinary/new',{date,detail, animalId, authorId},config)
         .then(response => {
             console.log(response)
         })
@@ -104,7 +108,7 @@ export function CreateVetReport() {
     
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/animals/`)
+        axios.get(API_URL_BASE + `/api/animals/`)
         .then(response => setAnimals(response.data))
         .catch(error => console.error(error))
     },[])
@@ -142,6 +146,8 @@ export function CommentHabitat() {
     const [habitatId,setHabitatId] = useState('')
     const [comment,setComment] = useState('')
     const navigate = useNavigate()
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     const token = localStorage.getItem('authToken')
     const config = {
@@ -152,7 +158,7 @@ export function CommentHabitat() {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/habitats`,config)
+        axios.get(API_URL_BASE + `/api/habitats`,config)
         .then(response => {
             setHabitats(response.data)
         })
@@ -162,7 +168,7 @@ export function CommentHabitat() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put(`http://localhost:3000/api/habitats/${habitatId}`,{_id:habitatId,commentaire:comment},config)
+        axios.put(API_URL_BASE + `/api/habitats/${habitatId}`,{_id:habitatId,commentaire:comment},config)
         .then(() => navigate('/veterinary/dashboard'))
         .catch(error => console.log(error))
     }
@@ -195,13 +201,15 @@ export function GetVetReports() {
 
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedAnimalId, setSelectedAnimalId] = useState('');
+    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const [vetReportsResponse, animalsResponse] = await Promise.all([
-                    axios.get('http://localhost:3000/api/veterinary'),
-                    axios.get('http://localhost:3000/api/animals')
+                    axios.get(API_URL_BASE + '/api/veterinary'),
+                    axios.get(API_URL_BASE + '/api/animals')
                 ]);
                 setVetReports(vetReportsResponse.data);
                 setAnimals(animalsResponse.data);
