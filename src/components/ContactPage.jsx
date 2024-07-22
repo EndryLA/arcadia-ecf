@@ -7,10 +7,10 @@ function ContactPage() {
     const [firstname,setFirstname] = useState('')
     const [email,setEmail] = useState('')
     const [message,setMessage] = useState('')
-    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
-
-
+    
+    
     const handleSubmit = (e) => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
         e.preventDefault()
         console.log(firstname, lastname, email, message)
         axios.post(API_URL_BASE + '/api/contact/send',{email,lastname,firstname,message})

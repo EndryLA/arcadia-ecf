@@ -9,8 +9,9 @@ import {Link} from 'react-router-dom'
 export function GetServices() {
     const [services,setServices] = useState([])
     const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
-
+    
     useEffect(() => { 
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
         axios.get(API_URL_BASE + '/api/services/')
         .then( response => {
             setServices(response.data)
@@ -152,12 +153,12 @@ export function CreateService() {
     const [description, setDescription] = useState('')
     const navigate = useNavigate()
     const userRole = localStorage.getItem('userRole')
-    const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
-
-
-
+    
+    
+    
     const handleSubmit = (e) => {
         e.preventDefault()
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
         axios.post(API_URL_BASE + '/api/services/new', {title,description})
         .then((res) => {
             navigate(`/${userRole}/services`)

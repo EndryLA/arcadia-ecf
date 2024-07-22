@@ -31,6 +31,7 @@ export function VetReportCrud() {
 
 
     useEffect(() => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
 
         axios.get(API_URL_BASE + '/api/animals',config)
         .then(response => {setAnimals(response.data)})
@@ -96,6 +97,7 @@ export function CreateVetReport() {
     }
 
     const handleSubmit = (e) => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
         e.preventDefault()
         axios.post(API_URL_BASE + '/api/veterinary/new',{date,detail, animalId, authorId},config)
         .then(response => {
@@ -108,6 +110,7 @@ export function CreateVetReport() {
     
 
     useEffect(() => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
         axios.get(API_URL_BASE + `/api/animals/`)
         .then(response => setAnimals(response.data))
         .catch(error => console.error(error))
@@ -158,6 +161,7 @@ export function CommentHabitat() {
 
 
     useEffect(() => {
+        const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
         axios.get(API_URL_BASE + `/api/habitats`,config)
         .then(response => {
             setHabitats(response.data)
@@ -206,6 +210,7 @@ export function GetVetReports() {
 
     useEffect(() => {
         const fetchData = async () => {
+            const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
             try {
                 const [vetReportsResponse, animalsResponse] = await Promise.all([
                     axios.get(API_URL_BASE + '/api/veterinary'),
