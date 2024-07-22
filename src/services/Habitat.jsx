@@ -109,11 +109,9 @@ export function CreateHabitat() {
     const config = {
         headers: {
             authorization:`Bearer ${token}`,
-            'Content-Type': 'multipart/form-data'
         }
     }
-
-
+   
     const handleSubmit = async (e) => {
         const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
 
